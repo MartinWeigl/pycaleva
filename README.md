@@ -37,6 +37,10 @@ Usage
     ```python
     ce.calibration_plot()
     ```
+- Show calibration belt
+    ```python
+    ce.calbelt(plot=True)
+    ```
 - Get various metrics
     ```python
     ce.metrics()
