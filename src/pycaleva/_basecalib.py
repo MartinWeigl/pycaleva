@@ -51,9 +51,6 @@ from .calbelt import CalibrationBelt, calbelt_result
 from .metrics import brier, auroc, brier_skill_score
 
 
-__all__ = ['CalibrationEvaluator']
-
-
 # SETS THE LIMIT FOR THE FREQUENCY IN CONTINGENCY TABLES
 CHI_SQUARE_VIOLATION_LIMIT = 1
 
@@ -64,11 +61,9 @@ phtest_result = namedtuple('phtest_result', ['statistic', 'pvalue', 'dof'])
 ztest_result = namedtuple('ztest_result', ['statistic', 'pvalue'])
 
 
-
 class DEVEL(Flag):
     INTERNAL = False
     EXTERNAL = True
-
 
 
 class _BaseCalibrationEvaluator:
@@ -579,3 +574,7 @@ class _BaseCalibrationEvaluator:
             plt.show()
 
         return fig
+
+    def metrics(self):
+        # TODO: IMPLEMENT ME!
+        return NotImplemented

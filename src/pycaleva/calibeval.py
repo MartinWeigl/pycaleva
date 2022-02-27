@@ -4,6 +4,8 @@
 from ._basecalib import _BaseCalibrationEvaluator
 from ._report import _Report
 
+__all__ = ['CalibrationEvaluator']
+
 # This class extends the _BaseCalibrationEvaluator adding a pdf-Report functionality
 class CalibrationEvaluator(_BaseCalibrationEvaluator):
 
