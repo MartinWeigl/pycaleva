@@ -106,7 +106,7 @@ class _Report(FPDF):
             shutil.rmtree(self.__plot_dir)
             os.mkdir(self.__plot_dir)
 
-            fig = self.__ca.calibration_plot(verbose=False)
+            fig = self.__ca.calibration_plot()
             fig.savefig(f"{self.__plot_dir}/calplot.png", dpi=300)
             plt.close(fig)
 
