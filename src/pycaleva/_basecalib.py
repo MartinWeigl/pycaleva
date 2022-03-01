@@ -392,7 +392,7 @@ class _BaseCalibrationEvaluator:
 
 
     # STATISTICAL TEST: Hosmer Lemeshow Test
-    def hosmerlemeshow(self, verbose = True) -> tuple[float,float]:
+    def hosmerlemeshow(self, verbose = True) -> hltest_result:
         r""" Perform the Hosmer-Lemeshow goodness of fit test on the data of class instance.
             The Hosmer-Lemeshow test checks the null hypothesis that the number of 
             given observed events match the number of expected events using given 
@@ -491,7 +491,7 @@ class _BaseCalibrationEvaluator:
 
 
     # STATISTICAL TEST: Pigeon Heyse Test
-    def pigeonheyse(self, verbose = True) -> tuple[float,float]:
+    def pigeonheyse(self, verbose = True) -> phtest_result:
         r"""Perform the Pigeon-Heyse goodness of fit test.
         The Pigeon-Heyse test checks the null hypothesis that number of given observed 
         events match the number of expected events over divided subgroups.
@@ -595,7 +595,7 @@ class _BaseCalibrationEvaluator:
 
 
     # STATISTICAL TEST: Spiegelhalter z-test
-    def z_test(self):
+    def z_test(self) -> ztest_result:
         r"""Perform the Spieglhalter's z-test for calibration.
         
         Returns
@@ -654,7 +654,7 @@ class _BaseCalibrationEvaluator:
 
 
     # STATISTICAL TEST / PLOT : Calibration Belt
-    def calbelt(self, plot:bool=False, confLevels:list=[0.8,0.95]) -> tuple[float,float]:
+    def calbelt(self, plot:bool=False, confLevels:list=[0.8,0.95]) -> calbelt_result:
         """Calculate the calibration belt and draw plot if desired.
         
         Parameters
