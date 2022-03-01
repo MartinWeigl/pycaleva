@@ -17,7 +17,7 @@ setup(
     
     classifiers=[
         "Programming Language :: Python :: 3 :: Only",
-        "License :: OSI Approved :: BSD 3 License",
+        "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
         "Development Status :: 4 - Beta",
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
