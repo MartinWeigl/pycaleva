@@ -1,82 +1,946 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.10.0" />
-<title>PyCalEva Documentation</title>
-<meta name="description" content="" />
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
-<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
-<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
-<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
-<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
-<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
-<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introduction &mdash; PyCalEva</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/icon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
-<body>
-<main>
-<article id="content">
-<header>
-<h1 class="title">Package <code>pycaleva</code></h1>
-</header>
-<section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">from .calibeval import CalibrationEvaluator
-from .calbelt import CalibrationBelt</code></pre>
-</details>
-</section>
-<section>
-<h2 class="section-title" id="header-submodules">Sub-modules</h2>
-<dl>
-<dt><code class="name"><a title="pycaleva.calbelt" href="calbelt.html">pycaleva.calbelt</a></code></dt>
-<dd>
-<div class="desc"><p>TODO: </p>
-<ul>
-<li>Confidences are not needed when do not plot</li>
-<li>Calculate boundaries only once if no changes detected</li>
-</ul></div>
-</dd>
-<dt><code class="name"><a title="pycaleva.calibeval" href="calibeval.html">pycaleva.calibeval</a></code></dt>
-<dd>
-<div class="desc"><p>This module holds the class <em>CalibrationEvaluator</em> that bundles functionalities of the PyCalEva Framework.</p></div>
-</dd>
-<dt><code class="name"><a title="pycaleva.metrics" href="metrics.html">pycaleva.metrics</a></code></dt>
-<dd>
-<div class="desc"><p>This module holds various metrics in context of calibration measurement of binary probabilistic classfication.</p></div>
-</dd>
-</dl>
-</section>
-<section>
-</section>
-<section>
-</section>
-<section>
-</section>
-</article>
-<nav id="sidebar">
-<a href="./index.html"><img src="img/logo.svg" /></a>
-<div class="toc">
-<ul></ul>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="#">
+            <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
 </div>
-<ul id="index">
-<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#a-framework-for-calibration-measurement-of-binary-classification-models">A framework for calibration measurement of binary classification models.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#documentation-api">Documentation API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#calibrationevaluator">CalibrationEvaluator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#calibrationbelt">CalibrationBelt</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#development">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">pycaleva</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+      <li>Introduction</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h1>
+<p><a class="reference external" href="https://martinweigl.github.io/pycaleva/"><img alt="" src="_images/logo.svg" /></a></p>
+<section id="a-framework-for-calibration-measurement-of-binary-classification-models">
+<h2>A framework for calibration measurement of binary classification models.<a class="headerlink" href="#a-framework-for-calibration-measurement-of-binary-classification-models" title="Permalink to this headline"></a></h2>
+<hr class="docutils" />
+<p>When performing classification tasks you sometimes want to obtain the probability of a class label instead of the class label itself. For example, it might be interesting to determine the risk of cancer for a patient. It is desireable to have a calibrated model which delivers predicted probabilities very close to the actual class membership probabilities. For this reason, this framework was developed allowing users to <strong>measure the calibration of binary classification models</strong>.</p>
+<ul class="simple">
+<li><p>Evaluate the calibration of binary classification models with probabilistic output (LogisticRegression, SVM, NeuronalNets …).</p></li>
+<li><p>Apply your model to testdata and use true class labels and predicted probabilities as input for the framework.</p></li>
+<li><p>Various statistical tests, metrics and plots are available.</p></li>
+<li><p>Supports creating a calibration report in pdf-format for your model.</p></li>
+</ul>
+<p><br />
+<a class="reference internal" href="_images/design.png"><img alt="_images/design.png" src="_images/design.png" style="width: 600px;" /></a>
+<br />
+<br />
+See the <a class="reference external" href="https://martinweigl.github.io/pycaleva/">documentation</a> for detailed information about classes and methods.</p>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ pip install pycaleva
+</pre></div>
+</div>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h2>
 <ul>
-<li><code><a title="pycaleva.calbelt" href="calbelt.html">pycaleva.calbelt</a></code></li>
-<li><code><a title="pycaleva.calibeval" href="calibeval.html">pycaleva.calibeval</a></code></li>
-<li><code><a title="pycaleva.metrics" href="metrics.html">pycaleva.metrics</a></code></li>
+<li><p>Import and initialize</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pycaleva</span> <span class="kn">import</span> <span class="n">CalibrationEvaluator</span>
+<span class="n">ce</span> <span class="o">=</span> <span class="n">CalibrationEvaluator</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">pred_prob</span><span class="p">,</span> <span class="n">outsample</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_groups</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>Apply statistical tests</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ce</span><span class="o">.</span><span class="n">hosmerlemeshow</span><span class="p">()</span>     <span class="c1"># Hosmer Lemeshow Test</span>
+<span class="n">ce</span><span class="o">.</span><span class="n">pigeonheyse</span><span class="p">()</span>        <span class="c1"># Pigeon Heyse Test</span>
+<span class="n">ce</span><span class="o">.</span><span class="n">z_test</span><span class="p">()</span>             <span class="c1"># Spiegelhalter z-Test</span>
+<span class="n">ce</span><span class="o">.</span><span class="n">calbelt</span><span class="p">(</span><span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># Calibrationi Belt (Test only)</span>
+</pre></div>
+</div>
+</li>
+<li><p>Show calibration plot</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ce</span><span class="o">.</span><span class="n">calibration_plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p>Show calibration belt</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ce</span><span class="o">.</span><span class="n">calbelt</span><span class="p">(</span><span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>Get various metrics</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ce</span><span class="o">.</span><span class="n">metrics</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p>Create pdf calibration report</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ce</span><span class="o">.</span><span class="n">calibration_report</span><span class="p">(</span><span class="s1">&#39;report.pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;my_model&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>See  the <a class="reference external" href="https://martinweigl.github.io/pycaleva/">documentation</a> of single methods for detailed usage examples.</p>
+</section>
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>Statistical tests for binary model calibration</p>
+<ul>
+<li><p>Hosmer Lemeshow Test</p></li>
+<li><p>Pigeon Heyse Test</p></li>
+<li><p>Spiegelhalter z-test</p></li>
+<li><p>Calibration belt</p></li>
+</ul>
+</li>
+<li><p>Graphical represantions showing calibration of binary models</p>
+<ul>
+<li><p>Calibration plot</p></li>
+<li><p>Calibration belt</p></li>
+</ul>
+</li>
+<li><p>Various Metrics</p>
+<ul>
+<li><p>Scaled Brier Score</p></li>
+<li><p>Adaptive Calibration Error</p></li>
+<li><p>Maximum Calibration Error</p></li>
+<li><p>Area within LOWESS Curve</p></li>
+<li><p>(AUROC)</p></li>
 </ul>
 </li>
 </ul>
-</nav>
-</main>
-<footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+<p>The above features are explained in more detail in PyCalEva’s <a class="reference external" href="https://martinweigl.github.io/pycaleva/">documentation</a></p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline"></a></h2>
+<ul>
+<li><p><strong>Statistical tests and metrics</strong>:</p>
+<p>[1] Hosmer Jr, David W., Stanley Lemeshow, and Rodney X. Sturdivant.
+Applied logistic regression. Vol. 398. John Wiley &amp; Sons, 2013.</p>
+<p>[2] Pigeon, Joseph G., and Joseph F. Heyse.
+An improved goodness of fit statistic for probability prediction models.
+Biometrical Journal: Journal of Mathematical Methods in Biosciences 41.1 (1999): 71-82.</p>
+<p>[3] Spiegelhalter, D. J. (1986). Probabilistic prediction in patient management and clinical trials.
+Statistics in medicine, 5(5), 421-433.</p>
+<p>[4] Huang, Y., Li, W., Macheret, F., Gabriel, R. A., &amp; Ohno-Machado, L. (2020).
+A tutorial on calibration measurements and calibration models for clinical prediction models.
+Journal of the American Medical Informatics Association, 27(4), 621-633.</p>
+</li>
+<li><p><strong>Calibration plot</strong>:</p>
+<p>[5] Jr, F. E. H. (2021). rms: Regression modeling strategies (R package version
+6.2-0) [Computer software]. The Comprehensive R Archive Network.
+Available from https://CRAN.R-project.org/package=rms</p>
+</li>
+<li><p><strong>Calibration belt</strong>:</p>
+<p>[6] Nattino, G., Finazzi, S., &amp; Bertolini, G. (2014). A new calibration test
+and a reappraisal of the calibration belt for the assessment of prediction models
+based on dichotomous outcomes. Statistics in medicine, 33(14), 2390-2407.</p>
+<p>[7] Bulgarelli, L. (2021). calibrattion-belt: Assessment of calibration in binomial prediction models [Computer software].
+Available from https://github.com/fabiankueppers/calibration-framework</p>
+<p>[8] Nattino, G., Finazzi, S., Bertolini, G., Rossi, C., &amp; Carrara, G. (2017).
+givitiR: The giviti calibration test and belt (R package version 1.3) [Computer
+software]. The Comprehensive R Archive Network.
+Available from https://CRAN.R-project.org/package=givitiR</p>
+</li>
+<li><p><strong>Others</strong>:</p>
+<p>[9] Sturges, H. A. (1926). The choice of a class interval.
+Journal of the american statistical association, 21(153), 65-66.</p>
+</li>
+</ul>
+<p>For most of the implemented methods in this software you can find references in the <a class="reference external" href="https://martinweigl.github.io/pycaleva/">documentation</a> as well.</p>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="documentation-api">
+<h1>Documentation API<a class="headerlink" href="#documentation-api" title="Permalink to this headline"></a></h1>
+<section id="calibrationevaluator">
+<h2>CalibrationEvaluator<a class="headerlink" href="#calibrationevaluator" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycaleva.calibeval.CalibrationEvaluator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycaleva.calibeval.</span></span><span class="sig-name descname"><span class="pre">CalibrationEvaluator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outsample</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_groups</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycaleva.calibeval.CalibrationEvaluator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pycaleva._basecalib._BaseCalibrationEvaluator</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.ace" title="pycaleva.calibeval.CalibrationEvaluator.ace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ace</span></code></a></dt><dd><p>Get the adaptive calibration error based on grouped data.</p>
+</dd>
+<dt><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.brier" title="pycaleva.calibeval.CalibrationEvaluator.brier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">brier</span></code></a></dt><dd><p>Get the scaled brier score for the current y_true and y_pred of class instance.</p>
+</dd>
+<dt><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.contingency_table" title="pycaleva.calibeval.CalibrationEvaluator.contingency_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contingency_table</span></code></a></dt><dd><p>Get the contingency table for grouped observed and expected class membership probabilities.</p>
+</dd>
+<dt><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.mce" title="pycaleva.calibeval.CalibrationEvaluator.mce"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mce</span></code></a></dt><dd><p>Get the maximum calibration error based on grouped data.</p>
+</dd>
+<dt><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.outsample" title="pycaleva.calibeval.CalibrationEvaluator.outsample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">outsample</span></code></a></dt><dd><p>Get information if outsample is set.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.calbelt" title="pycaleva.calibeval.CalibrationEvaluator.calbelt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calbelt</span></code></a>([plot, confLevels])</p></td>
+<td><p>Calculate the calibration belt and draw plot if desired.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.calibration_plot" title="pycaleva.calibeval.CalibrationEvaluator.calibration_plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calibration_plot</span></code></a>()</p></td>
+<td><p>Generate the calibration plot for the given predicted probabilities and true class labels of current class instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.calibration_report" title="pycaleva.calibeval.CalibrationEvaluator.calibration_report"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calibration_report</span></code></a>(filepath, model_name)</p></td>
+<td><p>Create a pdf-report including statistical tests and plots regarding the calibration of a binary classification model.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.group_data" title="pycaleva.calibeval.CalibrationEvaluator.group_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">group_data</span></code></a>(n_groups)</p></td>
+<td><p>Group class labels and predicted probabilities into equal sized groupes of size n.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.hosmerlemeshow" title="pycaleva.calibeval.CalibrationEvaluator.hosmerlemeshow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hosmerlemeshow</span></code></a>([verbose])</p></td>
+<td><p>Perform the Hosmer-Lemeshow goodness of fit test on the data of class instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.merge_groups" title="pycaleva.calibeval.CalibrationEvaluator.merge_groups"><code class="xref py py-obj docutils literal notranslate"><span class="pre">merge_groups</span></code></a>([min_count])</p></td>
+<td><p>Merge groups in contingency table to have count of expected and observed class events &gt;= min_count.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.metrics" title="pycaleva.calibeval.CalibrationEvaluator.metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">metrics</span></code></a>()</p></td>
+<td><p>Return all calibration metrics as namedtuple.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.pigeonheyse" title="pycaleva.calibeval.CalibrationEvaluator.pigeonheyse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pigeonheyse</span></code></a>([verbose])</p></td>
+<td><p>Perform the Pigeon-Heyse goodness of fit test.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.z_test" title="pycaleva.calibeval.CalibrationEvaluator.z_test"><code class="xref py py-obj docutils literal notranslate"><span class="pre">z_test</span></code></a>()</p></td>
+<td><p>Perform the Spieglhalter's z-test for calibration.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py property">
+<dt class="sig sig-object py" id="pycaleva.calibeval.CalibrationEvaluator.ace">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ace</span></span><a class="headerlink" href="#pycaleva.calibeval.CalibrationEvaluator.ace" title="Permalink to this definition"></a></dt>
+<dd><p>Get the adaptive calibration error based on grouped data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>adaptive calibration error</strong><span class="classifier">float</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycaleva.calibeval.CalibrationEvaluator.brier">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">brier</span></span><a class="headerlink" href="#pycaleva.calibeval.CalibrationEvaluator.brier" title="Permalink to this definition"></a></dt>
+<dd><p>Get the scaled brier score for the current y_true and y_pred of class instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>brier_score</strong><span class="classifier">float</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycaleva.calibeval.CalibrationEvaluator.calbelt">
+<span class="sig-name descname"><span class="pre">calbelt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confLevels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[0.8,</span> <span class="pre">0.95]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pycaleva.calibeval.CalibrationEvaluator.calbelt" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the calibration belt and draw plot if desired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>plot: boolean, optional</strong></dt><dd><p>Decide if plot for calibration belt should be shown.
+Much faster calculation if set to ‘false’!</p>
+</dd>
+<dt><strong>confLevels: list, optional</strong></dt><dd><p>Set the confidence intervalls for the calibration belt.
+Defaults to [0.8,0.95].</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>T</strong><span class="classifier">float</span></dt><dd><p>The Calibration plot test statistic T.</p>
+</dd>
+<dt><strong>p</strong><span class="classifier">float</span></dt><dd><p>The p-value of the test.</p>
+</dd>
+<dt><strong>fig</strong><span class="classifier">matplotlib.figure</span></dt><dd><p>The calibration belt plot. Only returned if plot=’True’</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#pycaleva.calbelt.CalibrationBelt" title="pycaleva.calbelt.CalibrationBelt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pycaleva.calbelt.CalibrationBelt</span></code></a></dt><dd></dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">CalibrationEvaluator.calplot</span></code></dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>This is an implemenation of the test proposed by Nattino et al. [6].
+The implementation was built upon the python port of the R-Package givitiR [8] and the python implementation calibration-belt [7].
+The calibration belt estimates the true underlying calibration curve given predicted probabilities and true class labels.
+Instead of directly drawing the calibration curve a belt is drawn using confidence levels.
+A low value for the teststatistic and a high p-value (&gt;0.05) indicate a well calibrated model.
+Other than Hosmer Lemeshow Test or Pigeon Heyse Test, this test is not based on grouping strategies.</p>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id1"><span class="brackets">6</span></dt>
+<dd><p>Nattino, G., Finazzi, S., &amp; Bertolini, G. (2014). A new calibration test
+and a reappraisal of the calibration belt for the assessment of prediction models
+based on dichotomous outcomes. Statistics in medicine, 33(14), 2390-2407.</p>
+</dd>
+<dt class="label" id="id2"><span class="brackets">7</span></dt>
+<dd><p>Bulgarelli, L. (2021). calibrattion-belt: Assessment of calibration in binomial prediction models [Computer software].
+Available from <a class="reference external" href="https://github.com/fabiankueppers/calibration-framework">https://github.com/fabiankueppers/calibration-framework</a></p>
+</dd>
+<dt class="label" id="id3"><span class="brackets">8</span></dt>
+<dd><p>Nattino, G., Finazzi, S., Bertolini, G., Rossi, C., &amp; Carrara, G. (2017).
+givitiR: The giviti calibration test and belt (R package version 1.3) [Computer
+software]. The Comprehensive R Archive Network.
+Available from <a class="reference external" href="https://CRAN.R-project.org/package=givitiR">https://CRAN.R-project.org/package=givitiR</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pycaleva</span> <span class="kn">import</span> <span class="n">CalibrationEvaluator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ce</span> <span class="o">=</span> <span class="n">CalibrationEvaluator</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">pred_prob</span><span class="p">,</span> <span class="n">outsample</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_groups</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ce</span><span class="o">.</span><span class="n">z_test</span><span class="p">(</span><span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="go">calbelt_result(statistic=1.6111330037643796, pvalue=0.4468347221346196, fig=None)</span>
+</pre></div>
+</div>
+<div class="admonition-todo admonition" id="id4">
+<p class="admonition-title">Todo</p>
+<ul class="simple">
+<li><p>Improve Calibration belt performance (boundary calculation)</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycaleva.calibeval.CalibrationEvaluator.calibration_plot">
+<span class="sig-name descname"><span class="pre">calibration_plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pycaleva.calibeval.CalibrationEvaluator.calibration_plot" title="Permalink to this definition"></a></dt>
+<dd><p>Generate the calibration plot for the given predicted probabilities and true class labels of current class instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>plot</strong><span class="classifier">matplotlib.figure</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.calbelt" title="pycaleva.calibeval.CalibrationEvaluator.calbelt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CalibrationEvaluator.calbelt</span></code></a></dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>This calibration plot is showing the predicted class probability against the actual probability according to the true class labels
+as a red triangle for each of the groups. An additional calibration curve is draw, estimated using the LOWESS algorithm.
+A model is well calibrated, if the red triangles and the calibration curve are both close to the plots bisector.
+In the left corner of the plot all available metrics are listed as well. This implementation was made following the example of the R package
+rms [5].</p>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id5"><span class="brackets">5</span></dt>
+<dd><p>Jr, F. E. H. (2021). rms: Regression modeling strategies (R package version
+6.2-0) [Computer software]. The Comprehensive R Archive Network.
+Available from <a class="reference external" href="https://CRAN.R-project.org/package=rms">https://CRAN.R-project.org/package=rms</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pycaleva</span> <span class="kn">import</span> <span class="n">CalibrationEvaluator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ce</span> <span class="o">=</span> <span class="n">CalibrationEvaluator</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">pred_prob</span><span class="p">,</span> <span class="n">outsample</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_groups</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ce</span><span class="o">.</span><span class="n">calibration_plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition-todo admonition" id="id6">
+<p class="admonition-title">Todo</p>
+<ul class="simple">
+<li><p>LOWESS Curve does not fit in comparison to R package rms</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycaleva.calibeval.CalibrationEvaluator.calibration_report">
+<span class="sig-name descname"><span class="pre">calibration_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycaleva.calibeval.CalibrationEvaluator.calibration_report" title="Permalink to this definition"></a></dt>
+<dd><p>Create a pdf-report including statistical tests and plots regarding the calibration of a binary classification model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filepath: str</strong></dt><dd><p>The filepath for the output file. Must end with ‘.pdf’</p>
+</dd>
+<dt><strong>model_name: str</strong></dt><dd><p>The name for the evaluated model.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycaleva.calibeval.CalibrationEvaluator.contingency_table">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">contingency_table</span></span><a class="headerlink" href="#pycaleva.calibeval.CalibrationEvaluator.contingency_table" title="Permalink to this definition"></a></dt>
+<dd><p>Get the contingency table for grouped observed and expected class membership probabilities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>contingency_table</strong><span class="classifier">DataFrame</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycaleva.calibeval.CalibrationEvaluator.group_data">
+<span class="sig-name descname"><span class="pre">group_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_groups</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycaleva.calibeval.CalibrationEvaluator.group_data" title="Permalink to this definition"></a></dt>
+<dd><p>Group class labels and predicted probabilities into equal sized groupes of size n.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>n_groups: int or str</strong></dt><dd><p>Number of groups to use for grouping probabilities.
+Set to ‘auto’ to use sturges function for estimation of optimal group size [9].</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><dl class="simple">
+<dt>ValueError: If the given number of groups is invalid.</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Sturges function for estimation of optimal group size:</p>
+<div class="math notranslate nohighlight">
+\[k=\left\lceil\log _{2} n\right\rceil+1\]</div>
+<p>Hosmer and Lemeshow recommend setting number of groups to 10 and with equally sized groups [1].</p>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id7"><span class="brackets">1</span></dt>
+<dd><p>Hosmer Jr, David W., Stanley Lemeshow, and Rodney X. Sturdivant.
+Applied logistic regression. Vol. 398. John Wiley &amp; Sons, 2013.</p>
+</dd>
+<dt class="label" id="id8"><span class="brackets">9</span></dt>
+<dd><p>Sturges, H. A. (1926). The choice of a class interval.
+Journal of the american statistical association, 21(153), 65-66.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycaleva.calibeval.CalibrationEvaluator.hosmerlemeshow">
+<span class="sig-name descname"><span class="pre">hosmerlemeshow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pycaleva.calibeval.CalibrationEvaluator.hosmerlemeshow" title="Permalink to this definition"></a></dt>
+<dd><p>Perform the Hosmer-Lemeshow goodness of fit test on the data of class instance.
+The Hosmer-Lemeshow test checks the null hypothesis that the number of
+given observed events match the number of expected events using given
+probabilistic class predictions and dividing those into deciles of risks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>verbose</strong><span class="classifier">bool (optional, default=True)</span></dt><dd><p>Whether or not to show test results and contingency table the teststatistic
+relies on.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>C</strong><span class="classifier">float</span></dt><dd><p>The Hosmer-Lemeshow test statistic.</p>
+</dd>
+<dt><strong>p-value</strong><span class="classifier">float</span></dt><dd><p>The p-value of the test.</p>
+</dd>
+<dt><strong>dof</strong><span class="classifier">int</span></dt><dd><p>Degrees of freedom</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.pigeonheyse" title="pycaleva.calibeval.CalibrationEvaluator.pigeonheyse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CalibrationEvaluator.pigeonheyse</span></code></a></dt><dd></dd>
+<dt><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.z_test" title="pycaleva.calibeval.CalibrationEvaluator.z_test"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CalibrationEvaluator.z_test</span></code></a></dt><dd></dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">scipy.stats.chisquare</span></code></dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>A low value for C and high p-value (&gt;0.05) indicate a well calibrated model.
+The power of this test is highly dependent on the sample size. Also the
+teststatistic lacks fit to chi-squared distribution in some situations [3].
+In order to decide on model fit it is recommended to check it’s discrematory
+power as well using metrics like AUROC, precision, recall. Furthermore a
+calibration plot (or reliability plot) can help to identify regions of the
+model underestimate or overestimate the true class membership probabilities.</p>
+<p>Hosmer and Lemeshow estimated the degrees of freedom for the teststatistic
+performing extensive simulations. According to their results the degrees of
+freedom are k-2 where k is the number of subroups the data is divided into.
+In the case of external evaluation the degrees of freedom is the same as k [1].</p>
+<p>Teststatistc:</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[E_{k 1}=\sum_{i=1}^{n_{k}} \hat{p}_{i 1}\]</div>
+<div class="math notranslate nohighlight">
+\[O_{k 1}=\sum_{i=1}^{n_{k}} y_{i 1}\]</div>
+<div class="math notranslate nohighlight">
+\[\hat{C}=\sum_{k=1}^{G} \frac{\left(O_{k 1}-E_{k 1}\right)^{2}}{E_{k 1}} + \frac{\left(O_{k 0}-E_{k 0}\right)^{2}}{E_{k 0}}\]</div>
+</div></blockquote>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id9"><span class="brackets">1</span></dt>
+<dd><p>Hosmer Jr, David W., Stanley Lemeshow, and Rodney X. Sturdivant.
+Applied logistic regression. Vol. 398. John Wiley &amp; Sons, 2013.</p>
+</dd>
+<dt class="label" id="id10"><span class="brackets">10</span></dt>
+<dd><p>“Hosmer-Lemeshow test”, <a class="reference external" href="https://en.wikipedia.org/wiki/Hosmer-Lemeshow_test">https://en.wikipedia.org/wiki/Hosmer-Lemeshow_test</a></p>
+</dd>
+<dt class="label" id="id11"><span class="brackets">11</span></dt>
+<dd><p>Pigeon, Joseph G., and Joseph F. Heyse. “A cautionary note about assessing
+the fit of logistic regression models.” (1999): 847-853.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pycaleva</span> <span class="kn">import</span> <span class="n">CalibrationEvaluator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ce</span> <span class="o">=</span> <span class="n">CalibrationEvaluator</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">pred_prob</span><span class="p">,</span> <span class="n">outsample</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_groups</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ce</span><span class="o">.</span><span class="n">hosmerlemeshow</span><span class="p">()</span>
+<span class="go">hltest_result(statistic=4.982635477424991, pvalue=0.8358193332183672, dof=9)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycaleva.calibeval.CalibrationEvaluator.mce">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mce</span></span><a class="headerlink" href="#pycaleva.calibeval.CalibrationEvaluator.mce" title="Permalink to this definition"></a></dt>
+<dd><p>Get the maximum calibration error based on grouped data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>maximum calibration error</strong><span class="classifier">float</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycaleva.calibeval.CalibrationEvaluator.merge_groups">
+<span class="sig-name descname"><span class="pre">merge_groups</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">min_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pycaleva.calibeval.CalibrationEvaluator.merge_groups" title="Permalink to this definition"></a></dt>
+<dd><p>Merge groups in contingency table to have count of expected and observed class events &gt;= min_count.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>min_count</strong><span class="classifier">int (optional, default=1)</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Hosmer and Lemeshow mention the possibility to merge groups at low samplesize to have higher expected and observed class event counts [1].
+This should guarantee that the requirements for chi-square goodness-of-fit tests are fullfilled.
+Be aware that the power of tests will be lower after merge!</p>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id12"><span class="brackets">1</span></dt>
+<dd><p>Hosmer Jr, David W., Stanley Lemeshow, and Rodney X. Sturdivant.
+Applied logistic regression. Vol. 398. John Wiley &amp; Sons, 2013.</p>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id13">
+<p class="admonition-title">Todo</p>
+<ul class="simple">
+<li><p>Warn at low number of groups ( ~ at g&lt;6 )</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycaleva.calibeval.CalibrationEvaluator.metrics">
+<span class="sig-name descname"><span class="pre">metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pycaleva.calibeval.CalibrationEvaluator.metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Return all calibration metrics as namedtuple.</p>
+<div class="admonition-todo admonition" id="id14">
+<p class="admonition-title">Todo</p>
+<ul class="simple">
+<li><p>Get all metrics as namedtuple</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pycaleva.calibeval.CalibrationEvaluator.outsample">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">outsample</span></span><a class="headerlink" href="#pycaleva.calibeval.CalibrationEvaluator.outsample" title="Permalink to this definition"></a></dt>
+<dd><p>Get information if outsample is set. External validation if set to ‘True’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>Outsample status</strong><span class="classifier">bool</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycaleva.calibeval.CalibrationEvaluator.pigeonheyse">
+<span class="sig-name descname"><span class="pre">pigeonheyse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pycaleva.calibeval.CalibrationEvaluator.pigeonheyse" title="Permalink to this definition"></a></dt>
+<dd><p>Perform the Pigeon-Heyse goodness of fit test.
+The Pigeon-Heyse test checks the null hypothesis that number of given observed
+events match the number of expected events over divided subgroups.
+Unlike the Hosmer-Lemeshow test this test allows the use of different
+grouping strategies and is more robust against variance within subgroups.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>verbose</strong><span class="classifier">bool (optional, default=True)</span></dt><dd><p>Whether or not to show test results and contingency table the teststatistic
+relies on.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>J</strong><span class="classifier">float</span></dt><dd><p>The Pigeon-Heyse test statistic J².</p>
+</dd>
+<dt><strong>p</strong><span class="classifier">float</span></dt><dd><p>The p-value of the test.</p>
+</dd>
+<dt><strong>dof</strong><span class="classifier">int</span></dt><dd><p>Degrees of freedom</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.hosmerlemeshow" title="pycaleva.calibeval.CalibrationEvaluator.hosmerlemeshow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CalibrationEvaluator.hosmerlemeshow</span></code></a></dt><dd></dd>
+<dt><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.z_test" title="pycaleva.calibeval.CalibrationEvaluator.z_test"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CalibrationEvaluator.z_test</span></code></a></dt><dd></dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">scipy.stats.chisquare</span></code></dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>This is an implemenation of the test proposed by Pigeon and Heyse [2].
+A low value for J² and high p-value (&gt;0.05) indicate a well calibrated model.
+Other then the Hosmer-Lemeshow test an adjustment factor is added to
+the calculation of the teststatistic, making the use of different
+grouping strategies possible as well.</p>
+<p>The power of this test is highly dependent on the sample size.
+In order to decide on model fit it is recommended to check it’s discrematory
+power as well using metrics like AUROC, precision, recall. Furthermore a
+calibration plot (or reliability plot) can help to identify regions of the
+model underestimate or overestimate the true class membership probabilities.</p>
+<p>Teststatistc:</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[\phi_{k}=\frac{\sum_{i=1}^{n_{k}} \hat{p}_{i 1}\left(1-\hat{p}_{i 1}\right)}{n_{k} \bar{p}_{k 1}\left(1-\bar{p}_{k 1}\right)}\]</div>
+<div class="math notranslate nohighlight">
+\[{J}^{2}=\sum_{k=1}^{G} \frac{\left(O_{k 1}-E_{k 1}\right)^{2}}{\phi_{k} E_{k 1}} + \frac{\left(O_{k 0}-E_{k 0}\right)^{2}}{\phi_{k} E_{k 0}}\]</div>
+</div></blockquote>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id15"><span class="brackets">1</span></dt>
+<dd><p>Hosmer Jr, David W., Stanley Lemeshow, and Rodney X. Sturdivant.
+Applied logistic regression. Vol. 398. John Wiley &amp; Sons, 2013.</p>
+</dd>
+<dt class="label" id="id16"><span class="brackets">2</span></dt>
+<dd><p>Pigeon, Joseph G., and Joseph F. Heyse. “An improved goodness of
+fit statistic for probability prediction models.”
+Biometrical Journal: Journal of Mathematical Methods in Biosciences
+41.1 (1999): 71-82.</p>
+</dd>
+<dt class="label" id="id17"><span class="brackets">11</span></dt>
+<dd><p>Pigeon, Joseph G., and Joseph F. Heyse. “A cautionary note about assessing
+the fit of logistic regression models.” (1999): 847-853.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pycaleva</span> <span class="kn">import</span> <span class="n">CalibrationEvaluator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ce</span> <span class="o">=</span> <span class="n">CalibrationEvaluator</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">pred_prob</span><span class="p">,</span> <span class="n">outsample</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_groups</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ce</span><span class="o">.</span><span class="n">pigeonheyse</span><span class="p">()</span>
+<span class="go">phtest_result(statistic=5.269600396341568, pvalue=0.8102017228852412, dof=9)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycaleva.calibeval.CalibrationEvaluator.z_test">
+<span class="sig-name descname"><span class="pre">z_test</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pycaleva.calibeval.CalibrationEvaluator.z_test" title="Permalink to this definition"></a></dt>
+<dd><p>Perform the Spieglhalter’s z-test for calibration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>statistic</strong><span class="classifier">float</span></dt><dd><p>The Spiegelhalter z-test statistic.</p>
+</dd>
+<dt><strong>p</strong><span class="classifier">float</span></dt><dd><p>The p-value of the test.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.hosmerlemeshow" title="pycaleva.calibeval.CalibrationEvaluator.hosmerlemeshow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CalibrationEvaluator.hosmerlemeshow</span></code></a></dt><dd></dd>
+<dt><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.pigeonheyse" title="pycaleva.calibeval.CalibrationEvaluator.pigeonheyse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CalibrationEvaluator.pigeonheyse</span></code></a></dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>This calibration test is performed in the manner of a z-test.
+The nullypothesis is that the estimated probabilities are equal to the true class probabilities.
+The test statistic under the nullypothesis can be approximated by a normal distribution.
+A low value for Z and high p-value (&gt;0.05) indicate a well calibrated model.
+Other than Hosmer Lemeshow Test or Pigeon Heyse Test, this test is not based on grouping strategies.</p>
+<p>Teststatistc:</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[Z=\frac{\sum_{i=1}^{n}\left(y_{i}-\hat{p}_{i}\right)\left(1-2 \hat{p}_{i}\right)}{\sqrt{\sum_{i=1}^{n}\left(1-2 \hat{p}_{i}\right)^{2} \hat{p}_{i}\left(1-\hat{p}_{i}\right)}}\]</div>
+</div></blockquote>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id18"><span class="brackets">1</span></dt>
+<dd><p>Spiegelhalter, D. J. (1986). Probabilistic prediction in patient management and clinical trials.
+Statistics in medicine, 5(5), 421-433.</p>
+</dd>
+<dt class="label" id="id19"><span class="brackets">2</span></dt>
+<dd><p>Huang, Y., Li, W., Macheret, F., Gabriel, R. A., &amp; Ohno-Machado, L. (2020).
+A tutorial on calibration measurements and calibration models for clinical prediction models.
+Journal of the American Medical Informatics Association, 27(4), 621-633.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pycaleva</span> <span class="kn">import</span> <span class="n">CalibrationEvaluator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ce</span> <span class="o">=</span> <span class="n">CalibrationEvaluator</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">pred_prob</span><span class="p">,</span> <span class="n">outsample</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_groups</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ce</span><span class="o">.</span><span class="n">z_test</span><span class="p">()</span>
+<span class="go">ztest_result(statistic=-0.21590257919669287, pvalue=0.829063686607032)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="calibrationbelt">
+<h2>CalibrationBelt<a class="headerlink" href="#calibrationbelt" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycaleva.calbelt.CalibrationBelt">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pycaleva.calbelt.</span></span><span class="sig-name descname"><span class="pre">CalibrationBelt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outsample</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confLevels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.8,</span> <span class="pre">0.95]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thres</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxDeg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycaleva.calbelt.CalibrationBelt" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pycaleva.calbelt.CalibrationBelt.plot" title="pycaleva.calbelt.CalibrationBelt.plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot</span></code></a>([q])</p></td>
+<td><p>Draw the calibration belt plot.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pycaleva.calbelt.CalibrationBelt.stats" title="pycaleva.calbelt.CalibrationBelt.stats"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stats</span></code></a>()</p></td>
+<td><p>Get the calibration belt test result, withour drawing the plot.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="pycaleva.calbelt.CalibrationBelt.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycaleva.calbelt.CalibrationBelt.plot" title="Permalink to this definition"></a></dt>
+<dd><p>Draw the calibration belt plot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>q: float, optional</strong></dt><dd><p>Sets the significance level.</p>
+</dd>
+<dt><strong>confLevels: list, optional</strong></dt><dd><p>Set the confidence intervalls for the calibration belt.
+Defaults to [0.8,0.95].</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>T</strong><span class="classifier">float</span></dt><dd><p>The Calibration plot test statistic T.</p>
+</dd>
+<dt><strong>p</strong><span class="classifier">float</span></dt><dd><p>The p-value of the test.</p>
+</dd>
+<dt><strong>fig</strong><span class="classifier">matplotlib.figure</span></dt><dd><p>The calibration belt plot. Only returned if plot=’True’</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">CalibrationEvaluator.calbelt</span></code></dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>This is an implemenation of the test proposed by Nattino et al. [6].
+The implementation was built upon the python port of the R-Package givitiR [8] and the python implementation calibration-belt [7].
+The calibration belt estimates the true underlying calibration curve given predicted probabilities and true class labels.
+Instead of directly drawing the calibration curve a belt is drawn using confidence levels.
+A low value for the teststatistic and a high p-value (&gt;0.05) indicate a well calibrated model.
+Other than Hosmer Lemeshow Test or Pigeon Heyse Test, this test is not based on grouping strategies.</p>
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id20"><span class="brackets">6</span></dt>
+<dd><p>Nattino, G., Finazzi, S., &amp; Bertolini, G. (2014). A new calibration test
+and a reappraisal of the calibration belt for the assessment of prediction models
+based on dichotomous outcomes. Statistics in medicine, 33(14), 2390-2407.</p>
+</dd>
+<dt class="label" id="id21"><span class="brackets">7</span></dt>
+<dd><p>Bulgarelli, L. (2021). calibrattion-belt: Assessment of calibration in binomial prediction models [Computer software].
+Available from <a class="reference external" href="https://github.com/fabiankueppers/calibration-framework">https://github.com/fabiankueppers/calibration-framework</a></p>
+</dd>
+<dt class="label" id="id22"><span class="brackets">8</span></dt>
+<dd><p>Nattino, G., Finazzi, S., Bertolini, G., Rossi, C., &amp; Carrara, G. (2017).
+givitiR: The giviti calibration test and belt (R package version 1.3) [Computer
+software]. The Comprehensive R Archive Network.
+Available from <a class="reference external" href="https://CRAN.R-project.org/package=givitiR">https://CRAN.R-project.org/package=givitiR</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pycaleva.calbelt</span> <span class="kn">import</span> <span class="n">CalibrationBelt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cb</span> <span class="o">=</span> <span class="n">CalibrationBelt</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">pred_prob</span><span class="p">,</span> <span class="n">outsample</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cb</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="go">calbelt_result(statistic=1.6111330037643796, pvalue=0.4468347221346196, fig=matplotlib.figure)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pycaleva.calbelt.CalibrationBelt.stats">
+<span class="sig-name descname"><span class="pre">stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pycaleva.calbelt.CalibrationBelt.stats" title="Permalink to this definition"></a></dt>
+<dd><p>Get the calibration belt test result, withour drawing the plot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>T</strong><span class="classifier">float</span></dt><dd><p>The Calibration plot test statistic T.</p>
+</dd>
+<dt><strong>p</strong><span class="classifier">float</span></dt><dd><p>The p-value of the test.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>A low value for the teststatistic and a high p-value (&gt;0.05) indicate a well calibrated model.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pycaleva.calbelt</span> <span class="kn">import</span> <span class="n">CalibrationBelt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cb</span> <span class="o">=</span> <span class="n">CalibrationBelt</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">pred_prob</span><span class="p">,</span> <span class="n">outsample</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cb</span><span class="o">.</span><span class="n">stats</span><span class="p">()</span>
+<span class="go">calbelt_result(statistic=1.6111330037643796, pvalue=0.4468347221346196, fig=None)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="development">
+<h1>Development<a class="headerlink" href="#development" title="Permalink to this headline"></a></h1>
+<p>This framework is still under development and will be improved over time.
+The final release is planned for May 2021.</p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<ul class="simple">
+<li><p>Improve Calibration belt performance (boundary calculation)</p></li>
+</ul>
+</div>
+<p class="todo-source"><a class="reference internal" href="#id4"><em>original entry</em></a></p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<ul class="simple">
+<li><p>LOWESS Curve does not fit in comparison to R package rms</p></li>
+</ul>
+</div>
+<p class="todo-source"><a class="reference internal" href="#id6"><em>original entry</em></a></p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<ul class="simple">
+<li><p>Warn at low number of groups ( ~ at g&lt;6 )</p></li>
+</ul>
+</div>
+<p class="todo-source"><a class="reference internal" href="#id13"><em>original entry</em></a></p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">Todo</p>
+<ul class="simple">
+<li><p>Get all metrics as namedtuple</p></li>
+</ul>
+</div>
+<p class="todo-source"><a class="reference internal" href="#id14"><em>original entry</em></a></p>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Martin Weigl.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
 </footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
 </body>
 </html>

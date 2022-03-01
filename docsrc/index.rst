@@ -1,0 +1,43 @@
+Introduction
+=============
+
+.. include:: ../README.md
+   :parser: myst_parser.sphinx_
+
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+
+.. toctree::
+   :hidden:
+
+   index
+
+Documentation API
+==================
+CalibrationEvaluator
+-------------------------
+.. autoclass:: pycaleva.calibeval.CalibrationEvaluator
+   :members:
+   :inherited-members:
+   :undoc-members:
+   :show-inheritance:
+
+CalibrationBelt
+-------------------------
+.. autoclass:: pycaleva.calbelt.CalibrationBelt
+   :members:
+   :inherited-members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Development
+==============
+This framework is still under development and will be improved over time.
+The final release is planned for May 2021.
+
+.. todolist::

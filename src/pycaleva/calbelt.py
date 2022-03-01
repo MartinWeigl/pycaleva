@@ -1,12 +1,3 @@
-'''
-TODO: 
--------------
- - Confidences are not needed when do not plot
- - Calculate boundaries only once if no changes detected
-'''
-
-
-from collections import namedtuple
 from math import sqrt, exp, pi, asin, atan, acos
 import warnings
 
@@ -23,10 +14,7 @@ from scipy.optimize import brentq, minimize, NonlinearConstraint
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
 
-
-
-# DEFINE RETURN TYPE
-calbelt_result = namedtuple('calbelt_result', ['statistic', 'pvalue', 'fig'])
+from ._result_types import *
 
 
 # DEFINE Cumulative density functions for m degrees 1 to 4
@@ -37,14 +25,22 @@ def cdf_m(T:float, m:int, outsample:bool, thres:float):
     """Defines the cumulative density functions for calibration belt of m degrees 1 to 4.
         Available for external or internal evaluation of models.
 
-    Args:
-        T (float): Teststatistic.
-        m (int): Degress of polynomial fit.
-        outsample (bool): Set to True for 'external' or False for 'internal' evaluation.
-        thres (float): The confidence level to use.
+    Parameters
+    ----------
+    T: float
+        The calibration belt teststatistic.
+    m: int
+        Degress of polynomial fit.
+    outsample : bool
+        Set to True for 'external' or False for 'internal' evaluation.
+    thres : float
+        The confidence level to use.
+
 
     Returns:
-        cdf (float): The cdf value for calibration belt according to parameters. 
+    -------
+        cdf : float
+            The cdf value for calibration belt according to parameters. 
     """
     pDegInc = 1 - thres
     k = chi2.ppf(1-pDegInc, 1)
@@ -371,11 +367,6 @@ class CalibrationBelt():
         return boundaries
 
 
-    # Return teststatistic and p-value
-    def stats(self):
-        return calbelt_result(self.__T, self.__pval, None)
-
-
     def __get_plot_text(self):
         infos = {"Degree Fit":self.__m, "n":self.__n, "T":self.__T}
 
@@ -397,7 +388,90 @@ class CalibrationBelt():
         return textstr
 
 
+    # Return teststatistic and p-value
+    def stats(self):
+        """Get the calibration belt test result, withour drawing the plot.
+
+        Returns
+        -------
+            T : float
+                The Calibration plot test statistic T.
+            p : float
+                The p-value of the test.
+
+        Notes
+        -----
+        A low value for the teststatistic and a high p-value (>0.05) indicate a well calibrated model.
+
+        Examples
+        --------
+        >>> from pycaleva.calbelt import CalibrationBelt
+        >>> cb = CalibrationBelt(y_test, pred_prob, outsample=True)
+        >>> cb.stats()
+        calbelt_result(statistic=1.6111330037643796, pvalue=0.4468347221346196, fig=None)
+        """
+
+        return calbelt_result(self.__T, self.__pval, None)
+
+
+
     def plot(self, q=.95, **kwargs):
+        """Draw the calibration belt plot.
+        
+        Parameters
+        ----------
+        q: float, optional
+            Sets the significance level.
+        confLevels: list, optional
+            Set the confidence intervalls for the calibration belt.
+            Defaults to [0.8,0.95].
+
+        Returns
+        -------
+        T : float
+            The Calibration plot test statistic T.
+        p : float
+            The p-value of the test.
+        fig : matplotlib.figure
+            The calibration belt plot. Only returned if plot='True'
+        
+        See Also
+        --------
+        CalibrationEvaluator.calbelt
+        
+
+        Notes
+        -----
+        This is an implemenation of the test proposed by Nattino et al. [6]. 
+        The implementation was built upon the python port of the R-Package givitiR [8] and the python implementation calibration-belt [7].
+        The calibration belt estimates the true underlying calibration curve given predicted probabilities and true class labels.
+        Instead of directly drawing the calibration curve a belt is drawn using confidence levels.
+        A low value for the teststatistic and a high p-value (>0.05) indicate a well calibrated model.
+        Other than Hosmer Lemeshow Test or Pigeon Heyse Test, this test is not based on grouping strategies.
+
+        References
+        ----------
+        ..  [6] Nattino, G., Finazzi, S., & Bertolini, G. (2014). A new calibration test 
+            and a reappraisal of the calibration belt for the assessment of prediction models 
+            based on dichotomous outcomes. Statistics in medicine, 33(14), 2390-2407.
+
+        ..  [7] Bulgarelli, L. (2021). calibrattion-belt: Assessment of calibration in binomial prediction models [Computer software].
+            Available from https://github.com/fabiankueppers/calibration-framework
+
+        ..  [8] Nattino, G., Finazzi, S., Bertolini, G., Rossi, C., & Carrara, G. (2017).
+            givitiR: The giviti calibration test and belt (R package version 1.3) [Computer
+            software]. The Comprehensive R Archive Network.
+            Available from https://CRAN.R-project.org/package=givitiR
+        
+
+        Examples
+        --------
+        >>> from pycaleva.calbelt import CalibrationBelt
+        >>> cb = CalibrationBelt(y_test, pred_prob, outsample=True)
+        >>> cb.plot()
+        calbelt_result(statistic=1.6111330037643796, pvalue=0.4468347221346196, fig=matplotlib.figure)
+
+        """
 
         for confidence in self.__confLevels:
             self.__calculate_boundaries(confidence, q=q, **kwargs)

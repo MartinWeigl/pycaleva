@@ -4,15 +4,10 @@ This file holds the logic for saving calibration measurement results to reports 
 
 References
 ----------
-The report export functionality relies heavily on the fpdf2 project.
+The report export functionality is using the fpdf2 package.
 https://pyfpdf.github.io/fpdf2/index.html
 
-
-TODO
----------
-
 """
-
 
 from fpdf import FPDF
 from datetime import datetime
@@ -22,7 +17,6 @@ import shutil
 import os
 import tempfile
 import matplotlib.pyplot as plt
-
 
 
 class _Report(FPDF):
