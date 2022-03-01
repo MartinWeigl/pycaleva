@@ -1,4 +1,4 @@
-[![](./misc/logo.svg)](https://martinweigl.github.io/pycaleva/)
+[![](https://martinweigl.github.io/pycaleva/assets/logo.svg)](https://martinweigl.github.io/pycaleva/)
 
 [Documentation]: https://martinweigl.github.io/pycaleva/
 
@@ -13,7 +13,7 @@ When performing classification tasks you sometimes want to obtain the probabilit
 - Supports creating a calibration report in pdf-format for your model.
 
 \
-<img src="misc/design.png" width="600">
+<img src="https://martinweigl.github.io/pycaleva/assets/design.png" width="600">
 \
 \
 See the [documentation] for detailed information about classes and methods.
@@ -27,6 +27,19 @@ Installation
     $ pip install pycaleva
 
 or get source code directly from: https://github.com/MartinWeigl/pycaleva
+
+
+Requirements
+------------
+- numpy>=1.17
+- scipy>=1.3
+- matplotlib>=3.1
+- tqdm>=4.40
+- pandas>=1.3.0
+- statsmodels>=0.13.1
+- fpdf2>=2.5.0
+- ipython>=7.30.1
+
 
 Usage
 -----
