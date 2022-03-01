@@ -2,7 +2,7 @@
 
 [Documentation]: https://martinweigl.github.io/pycaleva/
 
-### A framework for calibration measurement of binary classification models. 
+### A framework for calibration evaluation of binary classification models. 
 - - -
 
 When performing classification tasks you sometimes want to obtain the probability of a class label instead of the class label itself. For example, it might be interesting to determine the risk of cancer for a patient. It is desireable to have a calibrated model which delivers predicted probabilities very close to the actual class membership probabilities. For this reason, this framework was developed allowing users to **measure the calibration of binary classification models**.
@@ -23,8 +23,10 @@ See the [documentation] for detailed information about classes and methods.
 Installation
 ------------
 
+
     $ pip install pycaleva
 
+or get source code directly from: https://github.com/MartinWeigl/pycaleva
 
 Usage
 -----
