@@ -38,18 +38,12 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">pycaleva package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-pycaleva.calbelt">pycaleva.calbelt module</a></li>
-<li><a class="reference internal" href="#module-pycaleva.calibeval">pycaleva.calibeval module</a></li>
-<li><a class="reference internal" href="#module-pycaleva.metrics">pycaleva.metrics module</a></li>
-<li><a class="reference internal" href="#module-pycaleva">Module contents</a></li>
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#documentation-api">Documentation API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#development">Development</a></li>
 </ul>
-</li>
-</ul>
-</div>
+
         </div>
       </div>
     </nav>
@@ -234,6 +228,10 @@ Available from <a class="reference external" href="https://CRAN.R-project.org/pa
 <dd class="field-odd"><dl class="simple">
 <dt><a class="reference internal" href="index.html#pycaleva.calibeval.CalibrationEvaluator.ace" title="pycaleva.calibeval.CalibrationEvaluator.ace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ace</span></code></a></dt><dd><p>Get the adaptive calibration error based on grouped data.</p>
 </dd>
+<dt><a class="reference internal" href="index.html#pycaleva.calibeval.CalibrationEvaluator.auroc" title="pycaleva.calibeval.CalibrationEvaluator.auroc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">auroc</span></code></a></dt><dd><p>Get the area under the receiver operating characteristic</p>
+</dd>
+<dt><a class="reference internal" href="index.html#pycaleva.calibeval.CalibrationEvaluator.awlc" title="pycaleva.calibeval.CalibrationEvaluator.awlc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">awlc</span></code></a></dt><dd><p>Get the area between the nonparametric curve estimated by lowess and the theoritcally perfect calibration given by the calibration plot bisector.</p>
+</dd>
 <dt><a class="reference internal" href="index.html#pycaleva.calibeval.CalibrationEvaluator.brier" title="pycaleva.calibeval.CalibrationEvaluator.brier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">brier</span></code></a></dt><dd><p>Get the scaled brier score for the current y_true and y_pred of class instance.</p>
 </dd>
 <dt><a class="reference internal" href="index.html#pycaleva.calibeval.CalibrationEvaluator.contingency_table" title="pycaleva.calibeval.CalibrationEvaluator.contingency_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contingency_table</span></code></a></dt><dd><p>Get the contingency table for grouped observed and expected class membership probabilities.</p>
@@ -271,7 +269,7 @@ Available from <a class="reference external" href="https://CRAN.R-project.org/pa
 <td><p>Merge groups in contingency table to have count of expected and observed class events &gt;= min_count.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="index.html#pycaleva.calibeval.CalibrationEvaluator.metrics" title="pycaleva.calibeval.CalibrationEvaluator.metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">metrics</span></code></a>()</p></td>
-<td><p>Return all calibration metrics as namedtuple.</p></td>
+<td><p>Get all available calibration metrics as combined result tuple.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="index.html#pycaleva.calibeval.CalibrationEvaluator.pigeonheyse" title="pycaleva.calibeval.CalibrationEvaluator.pigeonheyse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pigeonheyse</span></code></a>([verbose])</p></td>
 <td><p>Perform the Pigeon-Heyse goodness of fit test.</p></td>

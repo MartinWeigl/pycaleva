@@ -136,7 +136,7 @@ class _BaseCalibrationEvaluator:
         # Group data according to predicted probabilities --> will also set contengency table for groups
         self.__data = None
         self.__ct = None
-        self.group_data(n_groups)
+        self.group_data(n_groups) # --> This method will update all groupbased metrics as well
 
     # PROPERTIES
     #---------------------------------------------------------------------------------------------
@@ -150,6 +150,15 @@ class _BaseCalibrationEvaluator:
         """
         return self.__ct
 
+    @property
+    def auroc(self):
+        """Get the area under the receiver operating characteristic
+
+        Returns
+        -------
+            auroc :  float
+        """
+        return self.__auroc
 
     @property
     def brier(self):
@@ -182,6 +191,17 @@ class _BaseCalibrationEvaluator:
         return self.__mce
 
     @property
+    def awlc(self):
+        """Get the area between the nonparametric curve estimated by lowess and
+            the theoritcally perfect calibration given by the calibration plot bisector.
+        
+        Returns
+        -------
+            Area within lowess curve : float
+        """
+        return self.__awlc
+
+    @property
     def outsample(self):
         """Get information if outsample is set. External validation if set to 'True'.
         
@@ -191,7 +211,8 @@ class _BaseCalibrationEvaluator:
         """
         return self.__devel
 
-    # Private methods
+
+    # PRIVATE METHODS
     # --------------------------------------------------------------------------------------------
         
     def __calc_ace(self):
@@ -254,8 +275,22 @@ class _BaseCalibrationEvaluator:
     def __update_groupbased_metrics(self):
         """Update all metrics of class instance that are based on grouping
         """
-        self.__ace = self.__calc_ace()                      # Update Adative calibration error
-        self.__mce = self.__calc_mce()                      # Update Maximum calibration error
+        self.__ace = self.__calc_ace()                      # Update Adative Calibration Error
+        self.__mce = self.__calc_mce()                      # Update Maximum Calibration Error
+
+        self.__nonparametric_fit()                          # Calculate nonparametric fit and update Area Within Lowess Curve
+
+
+    def __nonparametric_fit(self, update_awlc=True):
+        # Nonparametric curve based on y and p using lowess
+        x_nonparametric = np.arange(0,1,0.005)
+        y_nonparametric = lowess(self.__y, self.__p, it=0, xvals=x_nonparametric)
+
+        if update_awlc:
+            diff = np.abs(x_nonparametric - y_nonparametric)
+            self.__awlc = integrate.trapezoid(diff, y_nonparametric) # Area within loss curve
+            
+        return (x_nonparametric, y_nonparametric)
 
 
     def __metrics_to_string(self):
@@ -275,18 +310,34 @@ class _BaseCalibrationEvaluator:
         return textstr
 
 
-    # Public methods
+    # PUBLIC METHODS
     # --------------------------------------------------------------------------------------------
     
     # UTILITY: Return all metrics
     def metrics(self):
-        """Return all calibration metrics as namedtuple.
+        """Get all available calibration metrics as combined result tuple.
 
-        Todo:
-            * Get all metrics as namedtuple
+        Returns
+        -------
+        auroc   : float
+                    Area under the receiver operating characteristic.
+        brier   : float
+                    The scaled brier score.
+        ace     : int
+                    Adaptive calibration error.
+        mce     : float
+                    Maximum calibration error.
+        awlc    : float
+                    Area within the lowess curve
+        
+        Examples
+        --------
+        >>> from pycaleva import CalibrationEvaluator
+        >>> ce = CalibrationEvaluator(y_test, pred_prob, outsample=True, n_groups='auto')
+        >>> ce.metrics()
+        metrics_result(auroc=0.9739811912225705, brier=0.2677083794415594, ace=0.0361775962446639, mce=0.1837227304691177, awlc=0.041443052220213474)
         """
-        # TODO: IMPLEMENT ME!
-        return NotImplemented
+        return metrics_result(self.__auroc, self.__brier, self.__ace, self.__mce, self.__awlc)
 
 
     # UTILITY: Group data
@@ -725,7 +776,6 @@ class _BaseCalibrationEvaluator:
             return cb.stats()
 
 
-    
     def calibration_plot(self):
         """Generate the calibration plot for the given predicted probabilities and true class labels of current class instance.
 
@@ -766,12 +816,8 @@ class _BaseCalibrationEvaluator:
         y_grouped = self.__ct["mean_observed"]
         p_grouped = self.__ct["mean_predicted"]
 
-        # Nonparametric curve based on y and p using lowess
-        x_nonparametric = np.arange(0,1,0.005)
-        y_nonparametric = lowess(self.__y, self.__p, it=0, xvals=x_nonparametric)
-
-        diff = np.abs(x_nonparametric - y_nonparametric)
-        self.__awlc = integrate.trapezoid(diff, y_nonparametric) # Area within loss curve
+        # Get nonparametric curve based on y and p using lowess
+        self.__nonparametric_fit(update_awlc=False)
 
         # Add calibration line for model
         plt.scatter(p_grouped,y_grouped, marker="^", facecolors='none', edgecolors='r', label='Grouped observations')
