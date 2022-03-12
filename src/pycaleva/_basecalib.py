@@ -63,15 +63,22 @@ from ._result_types import *
 # SETS THE LIMIT FOR THE FREQUENCY IN CONTINGENCY TABLES
 CHI_SQUARE_VIOLATION_LIMIT = 1
 
+# SETS THE LIMIT FOR HIGHLIGHTING HIGH DEVIATION OF OBSERVED AND EXPECTED COUNTS IN CT
+HIGHLIGHT_DEVIATION_LIMIT = 0.1
+
+# SETS THE OUTPUT PRECISION OF FLOATS IN DATAFRAME
+pd.options.display.precision = 3
+
 
 class DEVEL(Flag):
     INTERNAL = False
     EXTERNAL = True
 
+
 # _BaseCalibrationEvaluator  <--(inherits from)-- CalibrationEvaluator
 class _BaseCalibrationEvaluator:
 
-    # INITIALIZE
+    # CONSTRUCTOR
     def __init__(self, y_true:np.ndarray, y_pred:np.ndarray, outsample:bool, n_groups:Union[int,str]=10) -> None:
         """This is the main class for the PyCalEva framework bundeling statistical tests, 
             metrics and plot for calibration measurement of binary classification models.
@@ -104,19 +111,13 @@ class _BaseCalibrationEvaluator:
             Journal of the american statistical association, 21(153), 65-66.
 
         """
-        # Sets the output precision for floats
-        pd.options.display.precision = 3
+        
+        # Check parameters
+        self.__check_parameters(np.array(y_true), np.array(y_pred), outsample)
 
-        # Check if classlabels are dichotomous
-        if not set(y_true) == set([0,1]):
-            raise ValueError("Invalid class labels! y_train must be dichotomous containing only values 0 or 1")
+        self.__y = np.array(y_true) # True class labels
+        self.__p = np.array(y_pred) # Predicted class probabilities
 
-        # Check if all probabilities betwenn 0.0 and 1.0
-        if not all(x >= 0.0 and x <= 1.0 for x in y_pred):
-            raise ValueError("Predicted probabilities must be in range [0.0 1.0]!")
-
-        self.__y = y_true           # True class labels
-        self.__p = y_pred           # Predicted class probabilities
         self.__n = len(y_true)      # Sample size
         self.__ngroups = None       # Group size
 
@@ -214,7 +215,23 @@ class _BaseCalibrationEvaluator:
 
     # PRIVATE METHODS
     # --------------------------------------------------------------------------------------------
-        
+    
+    # Check if parameters are valid
+    def __check_parameters(self, y, p, outsample) -> bool:
+        if (len(y) != len(p)):
+            raise ValueError("Observations y_true and Predictions y_pred differ in size!")
+        if not ( ((y==0) | (y==1)).all() ):
+            raise ValueError("Invalid class labels! y_train must be dichotomous containing only values 0 or 1")
+        if ( (p < 0.0 ).any() or (p > 1.0).any() ):
+            raise ValueError("Predicted probabilities y_pred must be in range [0.0 1.0]!")
+        if (abs( p.sum() - y.sum() ) < 1e-04 ) and outsample == True:
+            warnings.warn("Please set parameter outsample to 'false' if the evaluated model was fit on this dataset!", "UserWarning")
+        if ( y.sum() <= 1 ) or ( y.sum() >= (len(y) - 1) ):
+            raise ValueError("The number of events/non events in observations can not be less than 1.")
+
+        return True
+
+
     def __calc_ace(self):
         return np.abs((self.__ct.mean_predicted - self.__ct.mean_observed)).sum() / self.__ngroups
 
@@ -235,17 +252,18 @@ class _BaseCalibrationEvaluator:
         predicted = data['prob'].groupby(data.dcl).sum()        # Number of predicted class 1 events
 
         c_table = pd.DataFrame({"total":total, "mean_predicted":mean_predicted, "mean_observed":mean_observed, \
+                                "observed_0":total-observed, "predicted_0":total-predicted, 
                                 "observed_1":observed, "predicted_1":predicted})
         c_table.index.rename('Interval', inplace=True) #Rename index column
         return c_table
 
 
-    def __highlight_expected_low(self,row:pd.Series):
-        """Highlight cells with low count in contingency table
+    def __highlight_high_diff(self,row:pd.Series):
+        """Highlight contingency table cells with high difference in observed and expected values
         """
         props = [f'color: black']*len(row)
 
-        if row.predicted_1 < CHI_SQUARE_VIOLATION_LIMIT:
+        if ( abs(row.predicted_1 - row.observed_1) > (HIGHLIGHT_DEVIATION_LIMIT * row.total) ):
             props[-1] = f'color: red'
 
         return props
@@ -255,21 +273,21 @@ class _BaseCalibrationEvaluator:
         """Print warning message if expected frequencies are low.
         """
         if (self.__ct.predicted_1 < CHI_SQUARE_VIOLATION_LIMIT).any():
-            warnings.warn(f'Warning! Some expected frequencies are smaller then {CHI_SQUARE_VIOLATION_LIMIT}. ' +
+           print(f'Warning! Some expected frequencies are smaller then {CHI_SQUARE_VIOLATION_LIMIT}. ' +
                     'Possible violoation of chi²-distribution.')
 
 
     def __show_contingency_table(self, phi=None):
         """Display the contingency table using IPython.
         """
-        ct_out = self.__ct.copy()
+        ct_out = self.__ct.drop(['observed_0', 'predicted_0'], axis=1).copy()
 
         # Add phi correction factor if values are given
         if not phi is None:
             ct_out.insert(3, "phi", phi)
 
         ct_out.reset_index(inplace=True)
-        display(ct_out.style.apply(self.__highlight_expected_low, axis = 1))
+        display(ct_out.style.apply(self.__highlight_high_diff, axis = 1))
 
 
     def __update_groupbased_metrics(self):
@@ -385,7 +403,13 @@ class _BaseCalibrationEvaluator:
         df = df.sort_values('prob')
         
         # Group data using deciles of risks
-        df['dcl'] = pd.qcut(df['prob'], self.__ngroups)
+        try:
+            df['dcl'] = pd.qcut(df['prob'], self.__ngroups)
+        except ValueError:
+            raise Exception("Could not create groups. Maybe try with a lower number of groups or set n_groups to 'auto'.")
+        except BaseException as err:
+            print(f"Unexpected {err=}, {type(err)=}")
+            raise
 
         self.__data = df
         self.__ct = self.__init_contingency_table()
@@ -415,7 +439,6 @@ class _BaseCalibrationEvaluator:
         Todo:
             * Warn at low number of groups ( ~ at g<6 )
         """
-
 
         i = 0
         merged_rows = self.__ct.iloc[0:i].sum(axis=0, numeric_only=True)
@@ -817,7 +840,7 @@ class _BaseCalibrationEvaluator:
         p_grouped = self.__ct["mean_predicted"]
 
         # Get nonparametric curve based on y and p using lowess
-        self.__nonparametric_fit(update_awlc=False)
+        x_nonparametric,y_nonparametric = self.__nonparametric_fit(update_awlc=False)
 
         # Add calibration line for model
         plt.scatter(p_grouped,y_grouped, marker="^", facecolors='none', edgecolors='r', label='Grouped observations')

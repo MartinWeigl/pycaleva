@@ -1,20 +1,17 @@
-Introduction
-=============
-
-.. include:: ../README.md
-   :parser: myst_parser.sphinx_
-
-
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-
-
-.. toctree::
    :hidden:
 
    index
+
+
+Introduction
+=============
+.. include:: ../README.md
+   :parser: myst_parser.sphinx_
+
 
 Documentation API
 ==================
@@ -33,6 +30,11 @@ CalibrationBelt
    :inherited-members:
    :undoc-members:
    :show-inheritance:
+
+
+Example Usage
+=============
+See this `notebook <http://cnn.com/>`__ for example usage.
 
 
 Development

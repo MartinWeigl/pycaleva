@@ -133,25 +133,21 @@ def cdf_m(T:float, m:int, outsample:bool, thres:float):
 
 class CalibrationBelt():
 
-    def __init__(self, o:np.ndarray, e:np.ndarray, outsample:bool, subset = None, confLevels=[0.8, 0.95], thres=0.95, maxDeg = 4):
+    def __init__(self, y_true:np.ndarray, y_pred:np.ndarray, outsample:bool, subset = None, confLevels=[0.8, 0.95], thres=0.95, maxDeg = 4):
         
         # Check parameters
-        self.__check_parameters(o,e,outsample,thres)
+        self.__check_parameters(y_true,y_pred,outsample,thres)
 
-    
         if not subset is None:
             # Pick a random subset from data
-            idx = np.random.choice(np.arange(len(o)), subset, replace=False)
-            self.__o = o[idx]
-            self.__e = e[idx]
+            idx = np.random.choice(np.arange(len(y_true)), subset, replace=False)
+            self.__y = y_true[idx]
+            self.__p = y_pred[idx]
         else:
-            self.__o = o
-            self.__e = e
+            self.__y = y_true
+            self.__p = y_pred
 
-        # Check if given data is valid
-        self.__check_data(o, e)
-
-        self.__n = len(self.__o)
+        self.__n = len(self.__y)
 
         # Warn user at internal evaluation
         if not outsample:
@@ -160,7 +156,7 @@ class CalibrationBelt():
         self.__outsample = outsample
 
         self.__confLevels = sorted(confLevels, reverse=True)
-        self.__logit_e = logit(self.__e)   # Get logit form of predicted probabilities
+        self.__logit_e = logit(self.__p)   # Get logit form of predicted probabilities
 
         # Find polynomial fit using forward selection procedure
         self.__model, self.__m =  self.__forward_select(thres, maxDeg)
@@ -171,27 +167,23 @@ class CalibrationBelt():
         self.__boundaries = {}
 
 
-    def __check_parameters(self, o, e, outsample, thres) -> bool:
-        if (len(o) != len(e)):
-            raise ValueError("Observations o and Predictions p differ in size!")
-        if not ( ((o==0) | (o==1)).all() ):
-            raise ValueError("Observations o must be given as numpy array with binary class labels (0 or 1)!")
-        if ( (e < 0.0 ).any() or (e > 1.0).any() ):
-            raise ValueError("Predictions p must be given as numpy array with values in range 0.0 - 1.0")
+    def __check_parameters(self, y, p, outsample, thres) -> bool:
+        if (len(y) != len(p)):
+            raise ValueError("Observations y_true and Predictions y_pred differ in size!")
+        if not ( ((y==0) | (y==1)).all() ):
+            raise ValueError("Invalid class labels! y_train must be dichotomous containing only values 0 or 1")
+        if ( (p < 0.0 ).any() or (p > 1.0).any() ):
+            raise ValueError("Predicted probabilities y_pred must be in range [0.0 1.0]!")
         if (thres < 0.0 or thres > 1.0):
             raise ValueError("Threshold must be in range 0.0 - 1.0")
-        if (abs( e.sum() - o.sum() ) < 1e-04 ) and outsample == True:
+        if (abs( p.sum() - y.sum() ) < 1e-04 ) and outsample == True:
             warnings.warn("Please set parameter outsample to 'false' if the evaluated model was fit on this dataset!", "UserWarning")
-        return True
-
-    def __check_data(self, o, e) -> bool:
-        no_outcome_variaton = ( o.sum() <= 1 ) or ( o.sum() >= (len(o) - 1) )
-
-        if ( no_outcome_variaton ):
+        if ( y.sum() <= 1 ) or ( y.sum() >= (len(y) - 1) ):
             raise ValueError("The number of events/non events in observations can not be less than 1.")
 
-        return True       
+        return True
 
+    
     # Find polynomial fit using forward selection process
     def __forward_select(self, thres, maxDeg):
         family = sm.families.Binomial()
@@ -204,7 +196,7 @@ class CalibrationBelt():
             m_start = 2
             fit_formula = f"o ~ I(ge ** {m_start-1}) + "
         
-        data = {"o": self.__o, "ge": self.__logit_e}
+        data = {"o": self.__y, "ge": self.__logit_e}
         inv_chi2 = chi2.ppf(thres, 1)
 
         n = m_start
@@ -233,7 +225,7 @@ class CalibrationBelt():
 
 
     def __test(self, thres):
-        llh = np.sum(xlogy(self.__o, self.__e) + xlogy(1 - self.__o, 1 - self.__e))
+        llh = np.sum(xlogy(self.__y, self.__p) + xlogy(1 - self.__y, 1 - self.__p))
         T = 2 * (self.__model.llf - llh)
         pval = 1 - cdf_m(T, self.__m, self.__outsample, thres)
 
@@ -293,7 +285,7 @@ class CalibrationBelt():
 
         # Calculate logit(E) matrix
         M = np.linspace([0], [self.__m], num = self.__m + 1, axis=1)
-        Ge = logit(self.__e)[np.newaxis]
+        Ge = logit(self.__p)[np.newaxis]
         GeM = Ge.T ** M
 
         # Upper boundary (Eq27)
@@ -301,7 +293,7 @@ class CalibrationBelt():
 
         # Create subset based on size
         logit_sub = np.linspace(np.min(Ge), np.max(Ge), num=size//2)
-        e_sub = np.linspace(np.min(self.__e), np.max(self.__e), num=size//2)
+        e_sub = np.linspace(np.min(self.__p), np.max(self.__p), num=size//2)
         Ge_sub = np.sort(np.append(logit_sub, logit(e_sub)))
         GeM_sub = Ge_sub[np.newaxis].T ** M
 
@@ -316,13 +308,13 @@ class CalibrationBelt():
             alphaE = np.clip(alphaE, eps, 1-eps)
 
             # Compute Log-likelihood
-            lalpha = xlogy(self.__o, alphaE) + xlogy(1-self.__o, 1-alphaE)
+            lalpha = xlogy(self.__y, alphaE) + xlogy(1-self.__y, 1 - alphaE)
             return np.nansum(lalpha)
 
         def jac_lalpha(alpha):
             # Calculate probability
             alphaE = expit(GeM @ alpha)
-            return (self.__o - alphaE) @ GeM
+            return (self.__y - alphaE) @ GeM
 
 
         constraints = NonlinearConstraint(
