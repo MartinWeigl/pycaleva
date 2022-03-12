@@ -34,7 +34,7 @@ CalibrationBelt
 
 Example Usage
 =============
-See this `notebook <http://cnn.com/>`__ for example usage.
+See this `notebook <https://github.com/MartinWeigl/pycaleva/blob/main/example/example.ipynb>`__ for example usage.
 
 
 Development
