@@ -13,7 +13,7 @@ When performing classification tasks you sometimes want to obtain the probabilit
 - Supports creating a calibration report in pdf-format for your model.
 
 \
-<img src="https://martinweigl.github.io/pycaleva/assets/design.png" width="600">
+<img src="https://martinweigl.github.io/pycaleva/assets/design.png" width="600" alt="Image Design">
 \
 \
 See the [documentation] for detailed information about classes and methods.
@@ -26,7 +26,11 @@ Installation
 
     $ pip install pycaleva
 
-or get source code directly from: https://github.com/MartinWeigl/pycaleva
+or build on your own
+
+    $ git clone https://github.com/MartinWeigl/pycaleva.git
+    $ cd pycaleva
+    $ python setup.py install
 
 
 Requirements
@@ -74,6 +78,15 @@ Usage
     ```
 
 See  the [documentation] of single methods for detailed usage examples.
+
+Example Results
+---------------
+| Well calibrated model | Poorly calibrated model |
+| :---: | :---: |
+| <img src="https://martinweigl.github.io/pycaleva/assets/calplot_well.png" width="45%" alt="Image Calibration plot well calibrated">  |  <img src="https://martinweigl.github.io/pycaleva/assets/calplot_poorly.png" width="45%" alt="Image Calibration plot poorly calibrated"> |
+| <img src="https://martinweigl.github.io/pycaleva/assets/calbelt_well.png" width="45%" alt="Image Calibration belt well calibrated">  |  <img src="https://martinweigl.github.io/pycaleva/assets/calbelt_poorly.png" width="45%" alt="Image Calibration belt well calibrated"> |
+| <pre lang="python">hltest_result(statistic=4.982635477424991, pvalue=0.8358193332183672, dof=9)</pre> | <pre lang="python">hltest_result(statistic=26.32792475118742, pvalue=0.0018051545107069522, dof=9)</pre> |
+| <pre lang="python">ztest_result(statistic=-0.21590257919669287, pvalue=0.829063686607032)</pre> | <pre lang="python">ztest_result(statistic=-3.196125145498827, pvalue=0.0013928668407116645)</pre> |
 
 
 Features

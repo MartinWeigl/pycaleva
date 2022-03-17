@@ -39,6 +39,7 @@
 <li class="toctree-l2"><a class="reference internal" href="index.html#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="index.html#requirements">Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="index.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#example-results">Example Results</a></li>
 <li class="toctree-l2"><a class="reference internal" href="index.html#features">Features</a></li>
 <li class="toctree-l2"><a class="reference internal" href="index.html#references">References</a></li>
 </ul>
@@ -91,7 +92,7 @@
 <li><p>Supports creating a calibration report in pdf-format for your model.</p></li>
 </ul>
 <p><br />
-<a class="reference internal" href="https://martinweigl.github.io/pycaleva/assets/design.png"><img alt="https://martinweigl.github.io/pycaleva/assets/design.png" src="https://martinweigl.github.io/pycaleva/assets/design.png" style="width: 600px;" /></a>
+<a class="reference internal" href="https://martinweigl.github.io/pycaleva/assets/design.png"><img alt="Image Design" src="https://martinweigl.github.io/pycaleva/assets/design.png" style="width: 600px;" /></a>
 <br />
 <br />
 See the <a class="reference external" href="https://martinweigl.github.io/pycaleva/">documentation</a> for detailed information about classes and methods.</p>
@@ -101,7 +102,12 @@ See the <a class="reference external" href="https://martinweigl.github.io/pycale
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ pip install pycaleva
 </pre></div>
 </div>
-<p>or get source code directly from: https://github.com/MartinWeigl/pycaleva</p>
+<p>or build on your own</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/MartinWeigl/pycaleva.git
+$ cd pycaleva
+$ python setup.py install
+</pre></div>
+</div>
 </section>
 <section id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline"></a></h2>
@@ -155,6 +161,30 @@ See the <a class="reference external" href="https://martinweigl.github.io/pycale
 </li>
 </ul>
 <p>See  the <a class="reference external" href="https://martinweigl.github.io/pycaleva/">documentation</a> of single methods for detailed usage examples.</p>
+</section>
+<section id="example-results">
+<h2>Example Results<a class="headerlink" href="#example-results" title="Permalink to this headline"></a></h2>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p>Well calibrated model</p></th>
+<th class="text-align:center head"><p>Poorly calibrated model</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p><a class="reference internal" href="https://martinweigl.github.io/pycaleva/assets/calplot_well.png"><img alt="Image Calibration plot well calibrated" src="https://martinweigl.github.io/pycaleva/assets/calplot_well.png" style="width: 45%;" /></a></p></td>
+<td class="text-align:center"><p><a class="reference internal" href="https://martinweigl.github.io/pycaleva/assets/calplot_poorly.png"><img alt="Image Calibration plot poorly calibrated" src="https://martinweigl.github.io/pycaleva/assets/calplot_poorly.png" style="width: 45%;" /></a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p><a class="reference internal" href="https://martinweigl.github.io/pycaleva/assets/calbelt_well.png"><img alt="Image Calibration belt well calibrated" src="https://martinweigl.github.io/pycaleva/assets/calbelt_well.png" style="width: 45%;" /></a></p></td>
+<td class="text-align:center"><p><a class="reference internal" href="https://martinweigl.github.io/pycaleva/assets/calbelt_poorly.png"><img alt="Image Calibration belt well calibrated" src="https://martinweigl.github.io/pycaleva/assets/calbelt_poorly.png" style="width: 45%;" /></a></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p><pre lang="python">hltest_result(statistic=4.982635477424991, pvalue=0.8358193332183672, dof=9)</pre></p></td>
+<td class="text-align:center"><p><pre lang="python">hltest_result(statistic=26.32792475118742, pvalue=0.0018051545107069522, dof=9)</pre></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p><pre lang="python">ztest_result(statistic=-0.21590257919669287, pvalue=0.829063686607032)</pre></p></td>
+<td class="text-align:center"><p><pre lang="python">ztest_result(statistic=-3.196125145498827, pvalue=0.0013928668407116645)</pre></p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="features">
 <h2>Features<a class="headerlink" href="#features" title="Permalink to this headline"></a></h2>
@@ -265,7 +295,7 @@ Journal of the american statistical association, 21(153), 65-66.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.calibration_plot" title="pycaleva.calibeval.CalibrationEvaluator.calibration_plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calibration_plot</span></code></a>()</p></td>
 <td><p>Generate the calibration plot for the given predicted probabilities and true class labels of current class instance.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="index.html#pycaleva.calibeval.CalibrationEvaluator.calibration_report" title="pycaleva.calibeval.CalibrationEvaluator.calibration_report"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calibration_report</span></code></a>(filepath, model_name)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.calibration_report" title="pycaleva.calibeval.CalibrationEvaluator.calibration_report"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calibration_report</span></code></a>(filepath, model_name)</p></td>
 <td><p>Create a pdf-report including statistical tests and plots regarding the calibration of a binary classification model.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#pycaleva.calibeval.CalibrationEvaluator.group_data" title="pycaleva.calibeval.CalibrationEvaluator.group_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">group_data</span></code></a>(n_groups)</p></td>
@@ -372,7 +402,7 @@ Defaults to [0.8,0.95].</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <dl class="simple">
-<dt><a class="reference internal" href="index.html#pycaleva.calbelt.CalibrationBelt" title="pycaleva.calbelt.CalibrationBelt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pycaleva.calbelt.CalibrationBelt</span></code></a></dt><dd></dd>
+<dt><a class="reference internal" href="#pycaleva.calbelt.CalibrationBelt" title="pycaleva.calbelt.CalibrationBelt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pycaleva.calbelt.CalibrationBelt</span></code></a></dt><dd></dd>
 <dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">CalibrationEvaluator.calplot</span></code></dt><dd></dd>
 </dl>
 </div>
@@ -837,10 +867,10 @@ Journal of the American Medical Informatics Association, 27(4), 621-633.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="index.html#pycaleva.calbelt.CalibrationBelt.plot" title="pycaleva.calbelt.CalibrationBelt.plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot</span></code></a>([q])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pycaleva.calbelt.CalibrationBelt.plot" title="pycaleva.calbelt.CalibrationBelt.plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot</span></code></a>([q])</p></td>
 <td><p>Draw the calibration belt plot.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="index.html#pycaleva.calbelt.CalibrationBelt.stats" title="pycaleva.calbelt.CalibrationBelt.stats"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stats</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pycaleva.calbelt.CalibrationBelt.stats" title="pycaleva.calbelt.CalibrationBelt.stats"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stats</span></code></a>()</p></td>
 <td><p>Get the calibration belt test result, withour drawing the plot.</p></td>
 </tr>
 </tbody>
