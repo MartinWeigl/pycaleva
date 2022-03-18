@@ -387,6 +387,7 @@ class _BaseCalibrationEvaluator:
                 Applied logistic regression. Vol. 398. John Wiley & Sons, 2013.
         ..  [9] Sturges, H. A. (1926). The choice of a class interval. 
                 Journal of the american statistical association, 21(153), 65-66.
+
         """
 
         # Check group size parameter and set accordingly
@@ -438,6 +439,7 @@ class _BaseCalibrationEvaluator:
 
         Todo:
             * Warn at low number of groups ( ~ at g<6 )
+            * Merge from both sides
         """
 
         i = 0
@@ -830,8 +832,6 @@ class _BaseCalibrationEvaluator:
         >>> ce = CalibrationEvaluator(y_test, pred_prob, outsample=True, n_groups='auto')
         >>> ce.calibration_plot()
 
-        Todo:
-            * LOWESS Curve does not fit in comparison to R package rms
         """
         fig, ax1 = plt.subplots(figsize=(10,6))
 
