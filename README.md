@@ -83,8 +83,8 @@ Example Results
 ---------------
 | Well calibrated model | Poorly calibrated model |
 | :---: | :---: |
-| <img src="https://martinweigl.github.io/pycaleva/assets/calplot_well.png" width="45%" alt="Image Calibration plot well calibrated">  |  <img src="https://martinweigl.github.io/pycaleva/assets/calplot_poorly.png" width="45%" alt="Image Calibration plot poorly calibrated"> |
-| <img src="https://martinweigl.github.io/pycaleva/assets/calbelt_well.png" width="45%" alt="Image Calibration belt well calibrated">  |  <img src="https://martinweigl.github.io/pycaleva/assets/calbelt_poorly.png" width="45%" alt="Image Calibration belt well calibrated"> |
+| <img src="https://martinweigl.github.io/pycaleva/assets/calplot_well.png" width="65%" alt="Image Calibration plot well calibrated">  |  <img src="https://martinweigl.github.io/pycaleva/assets/calplot_poorly.png" width="65%" alt="Image Calibration plot poorly calibrated"> |
+| <img src="https://martinweigl.github.io/pycaleva/assets/calbelt_well.png" width="65%" alt="Image Calibration belt well calibrated">  |  <img src="https://martinweigl.github.io/pycaleva/assets/calbelt_poorly.png" width="65%" alt="Image Calibration belt well calibrated"> |
 | <pre lang="python">hltest_result(statistic=4.982635477424991, pvalue=0.8358193332183672, dof=9)</pre> | <pre lang="python">hltest_result(statistic=26.32792475118742, pvalue=0.0018051545107069522, dof=9)</pre> |
 | <pre lang="python">ztest_result(statistic=-0.21590257919669287, pvalue=0.829063686607032)</pre> | <pre lang="python">ztest_result(statistic=-3.196125145498827, pvalue=0.0013928668407116645)</pre> |
 
