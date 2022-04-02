@@ -21,7 +21,7 @@ from ._result_types import *
 #----------------------------------------------------------
 
 # Some scary math :(
-def cdf_m(T:float, m:int, outsample:bool, thres:float):
+def cdf_m(T:float, m:int, outsample:bool, alpha:float):
     """Defines the cumulative density functions for calibration belt of m degrees 1 to 4.
         Available for external or internal evaluation of models.
 
@@ -33,8 +33,8 @@ def cdf_m(T:float, m:int, outsample:bool, thres:float):
         Degress of polynomial fit.
     outsample : bool
         Set to True for 'external' or False for 'internal' evaluation.
-    thres : float
-        The confidence level to use.
+    alpha : float
+        The level of significance to use.
 
 
     Returns:
@@ -42,7 +42,7 @@ def cdf_m(T:float, m:int, outsample:bool, thres:float):
         cdf : float
             The cdf value for calibration belt according to parameters. 
     """
-    pDegInc = 1 - thres
+    pDegInc = 1 - alpha
     k = chi2.ppf(1-pDegInc, 1)
 
     # EXTERNAL EVALUATION
@@ -133,10 +133,78 @@ def cdf_m(T:float, m:int, outsample:bool, thres:float):
 
 class CalibrationBelt():
 
-    def __init__(self, y_true:np.ndarray, y_pred:np.ndarray, outsample:bool, subset = None, confLevels=[0.8, 0.95], thres=0.95, maxDeg = 4):
+    def __init__(self, y_true:np.ndarray, y_pred:np.ndarray, outsample:bool, subset = None, confLevels=[0.8, 0.95], alpha=0.95):
+        """Calculate the calibration belt and draw plot if desired.
+        
+        Parameters
+        ----------
+        y_true : array_like
+            Expected class labels given in test set. (Ground truth y)
+        y_pred : array_like
+            Observed probabilities predicted by a classification model.
+        outsample : bool
+            Set to 'False' for internal evaluation or set to 'True'
+            for external evaluation.
+        subset: array_like
+            An optional boolean vector specifying the subset of observations to be considered.
+            Defaults to None.
+        confLevels: list
+            A numeric vector containing the confidence levels of the calibration belt.
+            Defaults to [0.8,0.95].
+        alpha: float
+            The level of significance to use.
+
+        Returns
+        -------
+        T : float
+            The Calibration plot test statistic T.
+        p : float
+            The p-value of the test.
+        fig : matplotlib.figure
+            The calibration belt plot. Only returned if plot='True'
+        
+        See Also
+        --------
+        CalibrationEvaluator.calplot
+        
+
+        Notes
+        -----
+        This is an implemenation of the test proposed by Nattino et al. [6]. 
+        The implementation was built upon the python port of the R-Package givitiR [8] and the python implementation calibration-belt [7].
+        The calibration belt estimates the true underlying calibration curve given predicted probabilities and true class labels.
+        Instead of directly drawing the calibration curve a belt is drawn using confidence levels.
+        A low value for the teststatistic and a high p-value (>0.05) indicate a well calibrated model.
+        Other than Hosmer Lemeshow Test or Pigeon Heyse Test, this test is not based on grouping strategies.
+
+        References
+        ----------
+        ..  [6] Nattino, G., Finazzi, S., & Bertolini, G. (2014). A new calibration test 
+            and a reappraisal of the calibration belt for the assessment of prediction models 
+            based on dichotomous outcomes. Statistics in medicine, 33(14), 2390-2407.
+
+        ..  [7] Bulgarelli, L. (2021). calibrattion-belt: Assessment of calibration in binomial prediction models [Computer software].
+            Available from https://github.com/fabiankueppers/calibration-framework
+
+        ..  [8] Nattino, G., Finazzi, S., Bertolini, G., Rossi, C., & Carrara, G. (2017).
+            givitiR: The giviti calibration test and belt (R package version 1.3) [Computer
+            software]. The Comprehensive R Archive Network.
+            Available from https://CRAN.R-project.org/package=givitiR
+        
+
+        Examples
+        --------
+        >>> from pycaleva import CalibrationBelt
+        >>> cb = CalibrationBelt(y_test, pred_prob, outsample=True)
+        >>> cb.stats()
+        >>> cb.plot()
+
+        Todo:
+            * Improve Calibration belt performance (boundary calculation)
+        """
         
         # Check parameters
-        self.__check_parameters(y_true,y_pred,outsample,thres)
+        self.__check_parameters(y_true,y_pred,outsample,alpha)
 
         if not subset is None:
             # Pick a random subset from data
@@ -159,23 +227,24 @@ class CalibrationBelt():
         self.__logit_e = logit(self.__p)   # Get logit form of predicted probabilities
 
         # Find polynomial fit using forward selection procedure
-        self.__model, self.__m =  self.__forward_select(thres, maxDeg)
+        self.__maxDeg = 4
+        self.__model, self.__m =  self.__forward_select(alpha, self.__maxDeg)
 
         # Get teststatistic and p-value
-        self.__T, self.__pval = self.__test(thres)
+        self.__T, self.__pval = self.__test(alpha)
 
         self.__boundaries = {}
 
 
-    def __check_parameters(self, y, p, outsample, thres) -> bool:
+    def __check_parameters(self, y, p, outsample, alpha) -> bool:
         if (len(y) != len(p)):
             raise ValueError("Observations y_true and Predictions y_pred differ in size!")
         if not ( ((y==0) | (y==1)).all() ):
             raise ValueError("Invalid class labels! y_train must be dichotomous containing only values 0 or 1")
         if ( (p < 0.0 ).any() or (p > 1.0).any() ):
             raise ValueError("Predicted probabilities y_pred must be in range [0.0 1.0]!")
-        if (thres < 0.0 or thres > 1.0):
-            raise ValueError("Threshold must be in range 0.0 - 1.0")
+        if (alpha < 0.0 or alpha > 1.0):
+            raise ValueError("Alpha must be in range 0.0 - 1.0")
         if (abs( p.sum() - y.sum() ) < 1e-04 ) and outsample == True:
             warnings.warn("Please set parameter outsample to 'false' if the evaluated model was fit on this dataset!", "UserWarning")
         if ( y.sum() <= 1 ) or ( y.sum() >= (len(y) - 1) ):
@@ -185,7 +254,7 @@ class CalibrationBelt():
 
     
     # Find polynomial fit using forward selection process
-    def __forward_select(self, thres, maxDeg):
+    def __forward_select(self, alpha, maxDeg):
         family = sm.families.Binomial()
         m = 0
 
@@ -197,7 +266,7 @@ class CalibrationBelt():
             fit_formula = f"o ~ I(ge ** {m_start-1}) + "
         
         data = {"o": self.__y, "ge": self.__logit_e}
-        inv_chi2 = chi2.ppf(thres, 1)
+        inv_chi2 = chi2.ppf(alpha, 1)
 
         n = m_start
         while n <= maxDeg:
@@ -224,10 +293,12 @@ class CalibrationBelt():
         return(fit, m)
 
 
-    def __test(self, thres):
-        llh = np.sum(xlogy(self.__y, self.__p) + xlogy(1 - self.__y, 1 - self.__p))
-        T = 2 * (self.__model.llf - llh)
-        pval = 1 - cdf_m(T, self.__m, self.__outsample, thres)
+    def __test(self, alpha):
+        # Log-Likelihood of perfectly calibrated model (y_i = p_i)
+        llf_perfect = np.sum(xlogy(self.__y, self.__p) + xlogy(1 - self.__y, 1 - self.__p))
+        T = 2 * (self.__model.llf - llf_perfect)
+
+        pval = 1 - cdf_m(T, self.__m, self.__outsample, alpha)
 
         return T, pval
 
@@ -407,12 +478,12 @@ class CalibrationBelt():
 
 
 
-    def plot(self, q=.95, **kwargs):
+    def plot(self, alpha=.95, **kwargs):
         """Draw the calibration belt plot.
         
         Parameters
         ----------
-        q: float, optional
+        alpha: float, optional
             Sets the significance level.
         confLevels: list, optional
             Set the confidence intervalls for the calibration belt.
@@ -448,7 +519,7 @@ class CalibrationBelt():
             based on dichotomous outcomes. Statistics in medicine, 33(14), 2390-2407.
 
         ..  [7] Bulgarelli, L. (2021). calibrattion-belt: Assessment of calibration in binomial prediction models [Computer software].
-            Available from https://github.com/fabiankueppers/calibration-framework
+            Available from https://github.com/lbulgarelli/calibration
 
         ..  [8] Nattino, G., Finazzi, S., Bertolini, G., Rossi, C., & Carrara, G. (2017).
             givitiR: The giviti calibration test and belt (R package version 1.3) [Computer
@@ -466,7 +537,7 @@ class CalibrationBelt():
         """
 
         for confidence in self.__confLevels:
-            self.__calculate_boundaries(confidence, q=q, **kwargs)
+            self.__calculate_boundaries(confidence, q=alpha, **kwargs)
 
         # Plot stats
         fig, ax = plt.subplots(1, figsize=(10,6))

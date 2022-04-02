@@ -730,7 +730,7 @@ class _BaseCalibrationEvaluator:
 
 
     # STATISTICAL TEST / PLOT : Calibration Belt
-    def calbelt(self, plot:bool=False, confLevels:list=[0.8,0.95]) -> calbelt_result:
+    def calbelt(self, plot:bool=False, subset = None, confLevels=[0.8, 0.95], alpha=0.95) -> calbelt_result:
         """Calculate the calibration belt and draw plot if desired.
         
         Parameters
@@ -738,9 +738,14 @@ class _BaseCalibrationEvaluator:
         plot: boolean, optional
             Decide if plot for calibration belt should be shown.
             Much faster calculation if set to 'false'!
-        confLevels: list, optional
-            Set the confidence intervalls for the calibration belt.
+        subset: array_like
+            An optional boolean vector specifying the subset of observations to be considered.
+            Defaults to None.
+        confLevels: list
+            A numeric vector containing the confidence levels of the calibration belt.
             Defaults to [0.8,0.95].
+        alpha: float
+            The level of significance to use.
 
         Returns
         -------
@@ -785,15 +790,12 @@ class _BaseCalibrationEvaluator:
         --------
         >>> from pycaleva import CalibrationEvaluator
         >>> ce = CalibrationEvaluator(y_test, pred_prob, outsample=True, n_groups='auto')
-        >>> ce.z_test(plot=False)
+        >>> ce.calbelt(plot=False)
         calbelt_result(statistic=1.6111330037643796, pvalue=0.4468347221346196, fig=None)
-
-        Todo:
-            * Improve Calibration belt performance (boundary calculation)
 
         """
         
-        cb = CalibrationBelt(self.__y, self.__p, self.__devel, confLevels=confLevels)
+        cb = CalibrationBelt(self.__y, self.__p, self.__devel, subset=subset, confLevels=confLevels, alpha=alpha)
         
         if plot:
             return cb.plot()
