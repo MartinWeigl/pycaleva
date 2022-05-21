@@ -1,3 +1,6 @@
 sphinx-apidoc --force -o . ../src/
 make clean
 make html
+
+make singlehtml
+make latexpdf

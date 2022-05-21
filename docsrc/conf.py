@@ -47,6 +47,7 @@ extensions = ['numpydoc',
             'sphinx.ext.todo'
 ]
 
+
 master_doc = "index"
 
 myst_enable_extensions = ['html_image']

@@ -14,9 +14,6 @@ def brier(y,p,scale=False):
                 Expected class labels given in test set. (Ground truth y)
         p : array_like
                 Observed probabilities predicted by a classification model.
-        scale : bool, optional
-                Decides if brier score should be scaled to range [0,1].
-                Defaults to False.
                 
         Returns
         -------
@@ -33,8 +30,6 @@ def brier(y,p,scale=False):
         .. math::
             B=\frac{1}{N} \sum_{i=1}^{N}\left(y_{i}-\hat{p}_{i}\right)^{2}
 
-            B_{scaled} = \frac{B}{\overline{\hat{p}} (1 - \overline{\hat{p}})}
-
         References
         ----------
         ..  [1] Huang, Y., Li, W., Macheret, F., Gabriel, R. A., & Ohno-Machado, L. (2020). 
@@ -46,11 +41,6 @@ def brier(y,p,scale=False):
         """
     
     brier_score = (np.square(y-p)).sum() / len(y)
-
-    if scale:
-        p_mean = p.mean()
-        return (brier_score) / ( p_mean * (1 - p_mean) )
-
     return (np.square(y-p)).sum() / len(y)
 
 

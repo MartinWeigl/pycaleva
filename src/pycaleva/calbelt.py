@@ -67,8 +67,8 @@ def cdf_m(T:float, m:int, outsample:bool, alpha:float):
                 integrand1 = ( lambda y: (chi2.cdf(T - y, df = 1) - 1 + pDegInc) * chi2.pdf(y, df = 1) )
                 integrand2 = ( lambda y: (sqrt(T - y) - sqrt(k)) * 1/sqrt(y) )
 
-                integral1 = integrate(integrand1, lower = k, upper = T - k)[0]
-                integral2 = integrate(integrand2, lower = k, upper = T - k)[0]
+                integral1 = integrate(integrand1, a = k, b = T - k)[0]
+                integral2 = integrate(integrand2, a = k, b = T - k)[0]
 
                 num = (integral1 - exp(-T/2)/(2 * pi) * 2 * integral2)
                 den = pDegInc**2
@@ -85,7 +85,7 @@ def cdf_m(T:float, m:int, outsample:bool, alpha:float):
                     2)))) )
                 )
                 
-                integral = integrate(integrand, lower = sqrt(3 * k), upper = sqrt(T))[0]
+                integral = integrate(integrand, a = sqrt(3 * k), b = sqrt(T))[0]
 
                 return ((2/(pi * pDegInc**2))**(3/2) * integral)
 
@@ -110,7 +110,7 @@ def cdf_m(T:float, m:int, outsample:bool, alpha:float):
                 # INTERNAL m=3
                 integrand = ( lambda r: (r * exp(-(r**2)/2) * acos(sqrt(k)/r)) )
                 
-                integral = integrate(integrand, lower = sqrt(k), upper = sqrt(T))[0]
+                integral = integrate(integrand, a = sqrt(k), b = sqrt(T))[0]
                 return (2/(pi * pDegInc) * integral)
 
             elif m == 4:
@@ -120,7 +120,7 @@ def cdf_m(T:float, m:int, outsample:bool, alpha:float):
                                 2)) - sqrt(k)/r * acos((r**2/k - 1)**(-1/2))))
                             )
                 
-                integral = integrate(integrand, lower = sqrt(2 * k), upper = sqrt(T))[0]
+                integral = integrate(integrand, a = sqrt(2 * k), b = sqrt(T))[0]
                 return ((2/pi)**(3/2) * (pDegInc)**(-2) * integral)
             else:
                 # INTERNAL m>4 is not defined!
@@ -215,6 +215,7 @@ class CalibrationBelt():
             self.__y = y_true
             self.__p = y_pred
 
+        self.__clip_probs()
         self.__n = len(self.__y)
 
         # Warn user at internal evaluation
@@ -252,7 +253,11 @@ class CalibrationBelt():
 
         return True
 
+    # Avoid probabilities to be exactly zero or one
+    def __clip_probs(self):
+        self.__p = np.clip(self.__p, 1e-10, 1-(1e-10))
     
+
     # Find polynomial fit using forward selection process
     def __forward_select(self, alpha, maxDeg):
         family = sm.families.Binomial()
@@ -277,7 +282,7 @@ class CalibrationBelt():
 
             if n > m_start:
                 # Log-likelihood ratio test
-                Dm = 2 * (fit.llf - fit_new.llf)
+                Dm = (2 * (fit.llf - fit_new.llf))
 
                 # Use previous order for m if model does not improve
                 if Dm < inv_chi2:
@@ -289,7 +294,6 @@ class CalibrationBelt():
             n += 1
 
             fit_formula += " + "
-
         return(fit, m)
 
 

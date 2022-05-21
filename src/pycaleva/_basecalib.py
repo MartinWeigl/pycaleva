@@ -129,7 +129,7 @@ class _BaseCalibrationEvaluator:
         
         # Define calibration metrics
         self.__auroc = auroc(self.__y, self.__p)            # Area under the receiver operating curve
-        self.__brier = brier(self.__y, self.__p, True)      # Brier score scaled to [0.0 - 1.0]
+        self.__brier = brier(self.__y, self.__p,)           # Brier score
         self.__ace = None                                   # Adative calibration error
         self.__mce = None                                   # Maximum calibration error
         self.__awlc = None                                  # Area within lowess curve
@@ -306,7 +306,7 @@ class _BaseCalibrationEvaluator:
 
         if update_awlc:
             diff = np.abs(x_nonparametric - y_nonparametric)
-            self.__awlc = integrate.trapezoid(diff, y_nonparametric) # Area within loss curve
+            self.__awlc = integrate.trapezoid(diff, x_nonparametric) # Area within loss curve
             
         return (x_nonparametric, y_nonparametric)
 
@@ -402,12 +402,29 @@ class _BaseCalibrationEvaluator:
         
         # Sort Values according to their probability
         df = df.sort_values('prob')
+        df.reset_index(inplace=True)
         
         # Group data using deciles of risks
         try:
             df['dcl'] = pd.qcut(df['prob'], self.__ngroups)
         except ValueError:
-            raise Exception("Could not create groups. Maybe try with a lower number of groups or set n_groups to 'auto'.")
+            # Most likely low variance in probabilities results in non unique bin edges
+            try:
+                # FIX -> Put some probabilities into the same group
+                df['dcl'] = pd.qcut(df['prob'].rank(method='first'), self.__ngroups)
+
+                # Get propper interval labels after applied fix
+                new_categories = {}
+                df['rank'] = df['prob'].rank(method='first')
+                #for bin in set(df.dcl):
+                    #if bin.right > len(df.prob)-1:
+                        #new_categories[bin] = pd.Interval(left=round(df.prob[int(bin.left)],3), right=round(df.prob.iloc[-1],3))
+                    #else:
+                        #new_categories[bin] = pd.Interval(left=round(df.prob[int(bin.left)],3), right=round(df.prob[int(bin.right)],3))
+                    
+                #df['dcl'] = df['dcl'].cat.rename_categories(new_categories)
+            except ValueError:
+                raise Exception("Could not create groups. Maybe try with a lower number of groups or set n_groups to 'auto'.")
         except BaseException as err:
             print(f"Unexpected {err=}, {type(err)=}")
             raise
@@ -836,6 +853,7 @@ class _BaseCalibrationEvaluator:
 
         """
         fig, ax1 = plt.subplots(figsize=(10,6))
+        ax1.set_ylim(0.0, 1.0)
 
         # Draw a calibration plot using matplotlib only
         y_grouped = self.__ct["mean_observed"]
@@ -845,7 +863,7 @@ class _BaseCalibrationEvaluator:
         x_nonparametric,y_nonparametric = self.__nonparametric_fit(update_awlc=False)
 
         # Add calibration line for model
-        plt.scatter(p_grouped,y_grouped, marker="^", facecolors='none', edgecolors='r', label='Grouped observations')
+        plt.scatter(p_grouped,y_grouped, marker="^", facecolors='none', edgecolors='r', label=f'Grouped observations g={self.__ngroups}')
 
         # Add histogram on second axis
         h, e = np.histogram(self.__p, bins=50)
