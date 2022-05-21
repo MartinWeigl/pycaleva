@@ -198,9 +198,6 @@ class CalibrationBelt():
         >>> cb = CalibrationBelt(y_test, pred_prob, outsample=True)
         >>> cb.stats()
         >>> cb.plot()
-
-        Todo:
-            * Improve Calibration belt performance (boundary calculation)
         """
         
         # Check parameters

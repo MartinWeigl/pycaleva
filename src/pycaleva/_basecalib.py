@@ -453,10 +453,6 @@ class _BaseCalibrationEvaluator:
         ----------
         ..  [1] Hosmer Jr, David W., Stanley Lemeshow, and Rodney X. Sturdivant.
                 Applied logistic regression. Vol. 398. John Wiley & Sons, 2013.
-
-        Todo:
-            * Warn at low number of groups ( ~ at g<6 )
-            * Merge from both sides
         """
 
         i = 0

@@ -40,6 +40,6 @@ See this `notebook <https://github.com/MartinWeigl/pycaleva/blob/main/example/ex
 Development
 ==============
 This framework is still under development and will be improved over time.
-The final release is planned for May 2021.
+Feel free to report any issues at the `project homepage <https://github.com/MartinWeigl/pycaleva>`__.
 
 .. todolist::
