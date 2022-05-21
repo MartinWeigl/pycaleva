@@ -29,8 +29,27 @@ html_theme_options = {
     'display_version': False,
 }
 
+latex_elements = {
+     # The paper size ('letterpaper' or 'a4paper').
+     #
+     'papersize': 'a4paper',
+
+     # The font size ('10pt', '11pt' or '12pt').
+     #
+     'pointsize': '10pt',
+
+     # Additional stuff for the LaTeX preamble.
+     #
+     # 'preamble': '',
+
+     # Latex figure (float) alignment
+     #
+     # 'figure_align': 'htbp',
+    'extraclassoptions': 'openany,oneside',
+}
+
 # The full version, including alpha/beta/rc tags
-release = '0.2'
+release = '0.6'
 
 
 # -- General configuration ---------------------------------------------------
