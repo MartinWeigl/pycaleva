@@ -100,7 +100,7 @@ Features
     * Calibration plot
     * Calibration belt
 * Various Metrics
-    * Scaled Brier Score
+    * Brier Score
     * Adaptive Calibration Error
     * Maximum Calibration Error
     * Area within LOWESS Curve

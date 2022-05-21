@@ -163,7 +163,7 @@ class _BaseCalibrationEvaluator:
 
     @property
     def brier(self):
-        """Get the scaled brier score for the current y_true and y_pred of class instance.
+        """Get the brier score for the current y_true and y_pred of class instance.
 
         Returns
         -------
@@ -318,7 +318,7 @@ class _BaseCalibrationEvaluator:
         -------
             all_metrics: str
         """
-        metrics = {"AUROC":self.__auroc, r"$Brier_{scaled}$  ":self.__brier, "ACE":self.__ace, "MCE":self.__mce, "AWLC":self.__awlc }
+        metrics = {"AUROC":self.__auroc, "Brier":self.__brier, "ACE":self.__ace, "MCE":self.__mce, "AWLC":self.__awlc }
 
         lines = ['{:<10s}{:>8d}'.format("n",self.__n)]
         for k, v in metrics.items():
@@ -853,7 +853,7 @@ class _BaseCalibrationEvaluator:
 
         """
         fig, ax1 = plt.subplots(figsize=(10,6))
-        ax1.set_ylim(0.0, 1.0)
+        ax1.set_ylim(0.0, 1.05)
 
         # Draw a calibration plot using matplotlib only
         y_grouped = self.__ct["mean_observed"]
