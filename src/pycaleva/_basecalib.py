@@ -225,7 +225,7 @@ class _BaseCalibrationEvaluator:
         if ( (p < 0.0 ).any() or (p > 1.0).any() ):
             raise ValueError("Predicted probabilities y_pred must be in range [0.0 1.0]!")
         if (abs( p.sum() - y.sum() ) < 1e-04 ) and outsample == True:
-            warnings.warn("Please set parameter outsample to 'false' if the evaluated model was fit on this dataset!", "UserWarning")
+            warnings.warn(Warning("Please set parameter outsample to 'false' if the evaluated model was fit on this dataset!"), "UserWarning")
         if ( y.sum() <= 1 ) or ( y.sum() >= (len(y) - 1) ):
             raise ValueError("The number of events/non events in observations can not be less than 1.")
 
