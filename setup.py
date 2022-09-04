@@ -7,9 +7,9 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 
 setup(
     name="pycaleva",
-    version="0.6.0",
+    version="0.6.1",
     author="Martin Weigl",
-    author_email="martin.weigl@fhooe.at",
+    author_email="martinweigl48@gmail.com",
     description="A framework for calibration evaluation of binary classification models",
     long_description=long_description,
     long_description_content_type="text/markdown",
