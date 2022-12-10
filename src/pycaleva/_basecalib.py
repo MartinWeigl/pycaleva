@@ -52,11 +52,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.stats import chi2, norm
 from scipy import integrate
+from sklearn.metrics import roc_auc_score
 from statsmodels.nonparametric.smoothers_lowess import lowess
 from IPython.display import display
 
 from .calbelt import CalibrationBelt
-from .metrics import brier, auroc
+from .metrics import brier
 from ._result_types import *
 
 
@@ -128,7 +129,7 @@ class _BaseCalibrationEvaluator:
             self.__devel = DEVEL.INTERNAL
         
         # Define calibration metrics
-        self.__auroc = auroc(self.__y, self.__p)            # Area under the receiver operating curve
+        self.__auroc = roc_auc_score(self.__y, self.__p)    # Area under the receiver operating curve
         self.__brier = brier(self.__y, self.__p,)           # Brier score
         self.__ace = None                                   # Adative calibration error
         self.__mce = None                                   # Maximum calibration error
