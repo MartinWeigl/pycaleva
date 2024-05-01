@@ -89,7 +89,6 @@ prompt-toolkit @ file:///home/conda/feedstock_root/build_artifacts/prompt-toolki
 psutil==5.9.0
 pybtex==0.24.0
 pybtex-docutils==1.0.1
-pycaleva==0.6.0
 pycodestyle==2.8.0
 pycparser==2.21
 pyensae==1.3.884
