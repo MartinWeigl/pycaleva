@@ -246,11 +246,11 @@ class _BaseCalibrationEvaluator:
             contingency_table : DataFrame:
         """
         data = self.__data
-        total = data['class'].groupby(data.dcl).count()         # Total observations per group
-        mean_predicted = data['prob'].groupby(data.dcl).mean()  # Mean predicted probability per group
-        mean_observed = data['class'].groupby(data.dcl).mean()  # Mean observed probability per group
-        observed = data['class'].groupby(data.dcl).sum()        # Number of observed class 1 events
-        predicted = data['prob'].groupby(data.dcl).sum()        # Number of predicted class 1 events
+        total = data['class'].groupby(data.dcl, observed=False).count()         # Total observations per group
+        mean_predicted = data['prob'].groupby(data.dcl, observed=False).mean()  # Mean predicted probability per group
+        mean_observed = data['class'].groupby(data.dcl, observed=False).mean()  # Mean observed probability per group
+        observed = data['class'].groupby(data.dcl, observed=False).sum()        # Number of observed class 1 events
+        predicted = data['prob'].groupby(data.dcl, observed=False).sum()        # Number of predicted class 1 events
 
         c_table = pd.DataFrame({"total":total, "mean_predicted":mean_predicted, "mean_observed":mean_observed, \
                                 "observed_0":total-observed, "predicted_0":total-predicted, 
@@ -651,7 +651,7 @@ class _BaseCalibrationEvaluator:
         """
         
         # Factor phi to adjust X² statistic
-        phi = ( self.__data['prob'].groupby(self.__data.dcl).apply(lambda x: (x *(1-x)).sum()) ) /  \
+        phi = ( self.__data['prob'].groupby(self.__data.dcl, observed=False).apply(lambda x: (x *(1-x)).sum()) ) /  \
             ( self.__ct.total * self.__ct.mean_predicted * (1 - self.__ct.mean_predicted) )
 
         # Teststatistic
