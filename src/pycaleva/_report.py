@@ -92,9 +92,9 @@ class _Report(FPDF):
 
         zt = self.__ca.z_test()
         if (zt.pvalue < 0.001):
-            self.cell(self.__page_width, 0.0, f'Spieglhalter z-test: Z={round(zt.statistic,4)} p-value: < 0.001', align='L')
+            self.cell(self.__page_width, 0.0, f'Spiegelhalter z-test: Z={round(zt.statistic,4)} p-value: < 0.001', align='L')
         else:
-            self.cell(self.__page_width, 0.0, f'Spieglhalter z-test: Z={round(zt.statistic,4)} p-value: {round(zt.pvalue,4)}', align='L')
+            self.cell(self.__page_width, 0.0, f'Spiegelhalter z-test: Z={round(zt.statistic,4)} p-value: {round(zt.pvalue,4)}', align='L')
 
 
         self.ln(8)
