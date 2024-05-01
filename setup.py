@@ -7,7 +7,7 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 
 setup(
     name="pycaleva",
-    version="0.7.0",
+    version="0.8.0",
     author="Martin Weigl",
     author_email="martinweigl48@gmail.com",
     description="A framework for calibration evaluation of binary classification models",
@@ -19,7 +19,7 @@ setup(
         "Programming Language :: Python :: 3 :: Only",
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
     ],
 
@@ -28,9 +28,9 @@ setup(
     package_dir={'': 'src'},
     packages=find_packages(where='src'),
 
-    install_requires = ['numpy>=1.17', 'scipy>=1.3', 'scikit-learn>=1.2', 'matplotlib>=3.1', 'tqdm>=4.40', 'pandas>=1.3.0', 'statsmodels>=0.13.1', 'fpdf2>=2.5.0', 'ipython>=7.30.1'],
+    install_requires = ['numpy>=1.26', 'scipy>=1.13', 'scikit-learn>=1.4', 'matplotlib>=3.8', 'tqdm>=4.66', 'pandas>=2.2', 'statsmodels>=0.14', 'fpdf2>=2.7', 'ipython>=8.24'],
 
-    project_urls={  # Optional
+    project_urls={
         'Source': 'https://github.com/MartinWeigl/pycaleva',
         'Documentation': 'https://martinweigl.github.io/pycaleva/',
     },
