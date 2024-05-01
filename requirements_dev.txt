@@ -25,7 +25,6 @@ docutils==0.17.1
 entrypoints @ file:///home/conda/feedstock_root/build_artifacts/entrypoints_1605121927639/work/dist/entrypoints-0.3-py2.py3-none-any.whl
 fire==0.4.0
 fonttools @ file:///D:/bld/fonttools_1639926521672/work
-fpdf2==2.5.0
 ghp-import==2.0.2
 gitdb==4.0.9
 GitPython==3.1.27
@@ -73,7 +72,6 @@ nbformat==5.2.0
 nbsphinx==0.8.8
 nest-asyncio @ file:///home/conda/feedstock_root/build_artifacts/nest-asyncio_1638419302549/work
 notebook==6.4.8
-numpy @ file:///D:/bld/numpy_1640083352500/work
 numpydoc==1.2
 olefile @ file:///home/conda/feedstock_root/build_artifacts/olefile_1602866521163/work
 packaging @ file:///home/conda/feedstock_root/build_artifacts/packaging_1637239678211/work
@@ -116,8 +114,6 @@ readme-renderer==32.0
 requests==2.27.1
 requests-toolbelt==0.9.1
 rfc3986==2.0.0
-scikit-learn @ file:///D:/bld/scikit-learn_1639497678630/work
-scipy @ file:///C:/bld/scipy_1637806954976/work
 seaborn @ file:///home/conda/feedstock_root/build_artifacts/seaborn-split_1629095986539/work
 Send2Trash==1.8.0
 shiboken6==6.3.1
@@ -137,7 +133,6 @@ sphinxcontrib-jsmath==1.0.1
 sphinxcontrib-qthelp==1.0.3
 sphinxcontrib-serializinghtml==1.1.5
 SQLAlchemy==1.4.32
-statsmodels @ file:///D:/bld/statsmodels_1636765365648/work
 termcolor==1.1.0
 terminado==0.13.3
 testpath==0.6.0
@@ -145,7 +140,6 @@ threadpoolctl @ file:///home/conda/feedstock_root/build_artifacts/threadpoolctl_
 toml==0.10.2
 tomli==2.0.1
 tornado @ file:///D:/bld/tornado_1635819761050/work
-tqdm==4.62.3
 traitlets @ file:///home/conda/feedstock_root/build_artifacts/traitlets_1635260543454/work
 twine==3.8.0
 typing_extensions==4.1.1
