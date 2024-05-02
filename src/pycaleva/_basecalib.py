@@ -874,6 +874,7 @@ class _BaseCalibrationEvaluator:
         h = h.astype('float')
         h /= h.sum()                   # normalize stem height to sum to 1
         ax2 = ax1.twinx()
+        ax2.yaxis.set_visible(False)
         ax2.set_ylim([-0.01, 1.05])    # y-domain for the stem plot goes from 0 to 1, with slight offsets for visibility reasons
         ax2.stem(bin_center_points, h, linefmt="grey", markerfmt=" ", basefmt=" ")
 
