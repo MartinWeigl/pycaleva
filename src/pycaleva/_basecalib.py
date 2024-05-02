@@ -409,7 +409,7 @@ class _BaseCalibrationEvaluator:
         try:
             df['dcl'] = pd.qcut(df['prob'], self.__ngroups)
         except ValueError:
-            # Most likely low variance in probabilities results in non unique bin edges
+            # Most likely low variance in probabilities results in non unique bin e
             try:
                 # FIX -> Put some probabilities into the same group
                 df['dcl'] = pd.qcut(df['prob'].rank(method='first'), self.__ngroups)
@@ -862,27 +862,27 @@ class _BaseCalibrationEvaluator:
         # Add calibration line for model
         plt.scatter(p_grouped,y_grouped, marker="^", facecolors='none', edgecolors='r', label=f'Grouped observations g={self.__ngroups}')
 
-        # Add histogram on second axis
-        h, e = np.histogram(self.__p, bins=50)
-        h = h.astype('float')
-        h /= h.max()                # Get relative frequencies
-        ax2 = ax1.twinx()
-        ax2.set_ylim(-0.1,5)        # Scale down histogram
-        ax2.axis('off')             # Hide labels and ticks
-        ax2.stem(e[:-1],h, linefmt="grey", markerfmt=" ", basefmt=" ")
-
         # Add line for nonparametric fit using lowess
         ax1.plot(x_nonparametric, y_nonparametric, label="Nonparametric")
 
         # Add line for perfect calibration
         ax1.plot([0, 1], [0, 1], "k:", label="Perfectly calibrated")
 
+        # Add stem plot for distribution of observations
+        h, e = np.histogram(self.__p, bins=50, density=False)
+        bin_center_points = 0.5 * (e[1:] + e[:-1])
+        h = h.astype('float')
+        h /= h.sum()                   # normalize stem height to sum to 1
+        ax2 = ax1.twinx()
+        ax2.set_ylim([-0.01, 1.05])    # y-domain for the stem plot goes from 0 to 1, with slight offsets for visibility reasons
+        ax2.stem(bin_center_points, h, linefmt="grey", markerfmt=" ", basefmt=" ")
+
         ax1.set_xlabel('Predicted Probability')
         ax1.set_ylabel('Actual Probability')
         
-        props = dict(boxstyle='round', facecolor='white', alpha=0.4)
-        ax1.text(0.00, 0.75, self.__metrics_to_string(), fontsize=10, family='monospace', bbox=props)
+        props = dict(boxstyle='round', facecolor='white', alpha=0.5)
+        ax1.text(0.02, 0.78, self.__metrics_to_string(), fontsize=10, family='monospace', bbox=props)
 
-        ax1.legend(loc='best', bbox_to_anchor=(0.5, 0., 0.5, 0.5))
+        ax1.legend(loc='best', bbox_to_anchor=(0.5, 0., 0.5, 0.5), fancybox=True, framealpha=0.5)
 
         return fig
