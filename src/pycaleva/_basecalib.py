@@ -409,7 +409,7 @@ class _BaseCalibrationEvaluator:
         try:
             df['dcl'] = pd.qcut(df['prob'], self.__ngroups)
         except ValueError:
-            # Most likely low variance in probabilities results in non unique bin e
+            # Most likely low variance in probabilities results in non unique bin edges
             try:
                 # FIX -> Put some probabilities into the same group
                 df['dcl'] = pd.qcut(df['prob'].rank(method='first'), self.__ngroups)
